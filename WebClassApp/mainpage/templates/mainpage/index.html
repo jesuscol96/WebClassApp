@@ -1,5 +1,55 @@
+<!DOCTYPE html>
 {% extends "base.html" %}
-
 {% block content %}
-  <div class="bg-primary">Index</div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#"><i class="fas fa-code-branch mr-2"></i> Django</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="container-fluid col-8">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#"><i class="fas fa-home mr-1"></i>Home <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-link mr-1"></i>Link</a>
+                    </li>
+            </div>
+            <div class="container-fluid col-4">
+                <a class="btn btn-outline-success mx-2 float-right" href="#"><i
+                        class="far fa-registered mr-1"></i>Register <span class="sr-only">(current)</span></a>
+                <a class="btn btn-outline-primary float-right" href="#"><i class="fas fa-sign-in-alt mr-1"></i>Login
+                    <span class="sr-only">(current)</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="jumbotron jumbotron-fluid LartoDj" style="height: 100vh; padding-top: 250px">
+        <div class="container col-12">
+            <h1 class="display-3 text-center lightblack mb-5 "><i class="fab fa-php mr-3"></i>Laravel in Django <i
+                    class="fab fa-python ml-2"></i> </h1>
+        </div>
+        <div class="container col-12">
+            <div class="row col-12 text-center center-block">
+                <div class="col-md-12 col-md-offset-5">
+                    <a class="btn btn-outline-success col-1  float-center mx-2"><i
+                            class="fab fa-dochub mr-1"></i>DOCS</a>
+                    <a class="btn btn-outline-success col-1  float-center mx-2"><i
+                            class="fas fa-podcast mr-1"></i>LARACAST</a>
+                    <a class="btn btn-outline-success  col-1 float-center mx-2"><i
+                            class="far fa-newspaper mr-1"></i>NEWS</a>
+                    <a class="btn btn-outline-success  col-1 float-center mx-2"><i class="fas fa-blog mr-1"></i>BLOG</a>
+                    <a class="btn btn-outline-success  col-1 float-center mx-2"><i class="far fa-sun mr-1"></i>NOVA</a>
+                    <a class="btn btn-outline-success col-1 float-center mx-2 "><i class="fab fa-git mr-1"></i>FORGE</a>
+                    <a class="btn btn-outline-success col-1 float-center mx-2"><i class="fas fa-tint mr-1"></i>VAPOR</a>
+                    <a class="btn btn-outline-success col-1 float-center mx-2"><i
+                            class="fab fa-github mr-1"></i>GITHUB</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
