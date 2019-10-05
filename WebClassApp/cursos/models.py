@@ -1,8 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
+from categorias.models import Categories
 
 class Courses(models.Model):
-    user_id = models.IntegerField()
-    category_id = models.IntegerField()
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    category_id = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=255)
     sub_title = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField()
@@ -28,9 +30,9 @@ class Courses(models.Model):
         db_table = 'courses'
 
 class CourseUser(models.Model):
-    user_id = models.IntegerField()
-    course_id = models.IntegerField(blank=True, null=True)
-    category_id = models.IntegerField(blank=True, null=True)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    course_id = models.ForeignKey(Courses, on_delete=models.CASCADE, blank=True, null=True)
+    category_id = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=True, null=True)
     user_account_id = models.IntegerField(blank=True, null=True)
     paid_date = models.DateTimeField(blank=True, null=True)
     expiry_date = models.DateTimeField(blank=True, null=True)
@@ -46,8 +48,8 @@ class CourseUser(models.Model):
 
 
 class Items(models.Model):
-    user_id = models.IntegerField(blank=True, null=True)
-    course_id = models.IntegerField()
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    course_id = models.ForeignKey(Courses, on_delete=models.CASCADE, blank=True, null=True)
     is_free = models.IntegerField(blank=True, null=True)
     thumbnail = models.CharField(max_length=255, blank=True, null=True)
     view_count = models.IntegerField()
@@ -62,11 +64,11 @@ class Items(models.Model):
         db_table = 'items'
 
 class Views(models.Model):
-    user_id = models.IntegerField()
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     user_account_id = models.IntegerField(blank=True, null=True)
-    category_id = models.IntegerField(blank=True, null=True)
-    course_id = models.IntegerField(blank=True, null=True)
-    item_id = models.IntegerField(blank=True, null=True)
+    category_id = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=True, null=True)
+    course_id = models.ForeignKey(Courses, on_delete=models.CASCADE, blank=True, null=True)
+    item_id = models.ForeignKey(Items, on_delete=models.CASCADE, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
     updated_at = models.DateTimeField(blank=True, null=True)
 
@@ -74,10 +76,10 @@ class Views(models.Model):
         db_table = 'views'
 
 class Comments(models.Model):
-    user_id = models.IntegerField()
-    course_id = models.IntegerField(blank=True, null=True)
-    category_id = models.IntegerField(blank=True, null=True)
-    item_id = models.IntegerField(blank=True, null=True)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    course_id = models.ForeignKey(Courses, on_delete=models.CASCADE, blank=True, null=True)
+    category_id = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=True, null=True)
+    item_id = models.ForeignKey(Items, on_delete=models.CASCADE, blank=True, null=True)
     body = models.TextField()
     deleted_at = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
