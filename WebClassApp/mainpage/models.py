@@ -42,7 +42,6 @@ class PasswordResets(models.Model):
 
 class Payments(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    category_id = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=True, null=True)
     course_id = models.ForeignKey(Courses, on_delete=models.CASCADE, blank=True, null=True)
     amount = models.FloatField()
     status = models.CharField(max_length=255)
@@ -57,10 +56,7 @@ class Payments(models.Model):
 
 class Coupons(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    student_id = models.CharField(max_length=255)
     course_id = models.ForeignKey(Courses, on_delete=models.CASCADE, blank=True, null=True)
-    category_id = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=True, null=True)
-    user_account_id = models.IntegerField(blank=True, null=True)
     available_on_course_page = models.CharField(max_length=255)
     type = models.CharField(max_length=255)
     price = models.FloatField()

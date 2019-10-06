@@ -32,8 +32,6 @@ class Courses(models.Model):
 class CourseUser(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     course_id = models.ForeignKey(Courses, on_delete=models.CASCADE, blank=True, null=True)
-    category_id = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=True, null=True)
-    user_account_id = models.IntegerField(blank=True, null=True)
     paid_date = models.DateTimeField(blank=True, null=True)
     expiry_date = models.DateTimeField(blank=True, null=True)
     plan = models.CharField(max_length=255, blank=True, null=True)
@@ -65,7 +63,6 @@ class Items(models.Model):
 
 class Views(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    user_account_id = models.IntegerField(blank=True, null=True)
     category_id = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=True, null=True)
     course_id = models.ForeignKey(Courses, on_delete=models.CASCADE, blank=True, null=True)
     item_id = models.ForeignKey(Items, on_delete=models.CASCADE, blank=True, null=True)
@@ -78,8 +75,6 @@ class Views(models.Model):
 class Comments(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     course_id = models.ForeignKey(Courses, on_delete=models.CASCADE, blank=True, null=True)
-    category_id = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=True, null=True)
-    item_id = models.ForeignKey(Items, on_delete=models.CASCADE, blank=True, null=True)
     body = models.TextField()
     deleted_at = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
