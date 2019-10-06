@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="{% url 'mainpage:process_register' %}"  method="post">
+{% csrf_token %}
+  <table>
+    <tr>
+      <td>User:</td>
+      <td><input type="text" name="username"></td>
+    </tr>
+    <tr>
+      <td>E-mail:</td>
+      <td><input type="email" name="email"></td>
+    </tr>
+    <tr>
+      <td>First Name:</td>
+      <td><input type="text" name="firstname"></td>
+    </tr>
+    <tr>
+      <td>Last Name:</td>
+      <td><input type="text" name="lastname"></td>
+    </tr>
+    <tr>
+      <td>Password:</td>
+      <td><input type="password" name="password"></td>
+    </tr>
+    <tr>
+      <td colspan="2" align="center"><input type="submit"  value="Register"> </td>
+    </tr>
+  </table>
+</form>
+
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{curso.title}}</h2>
+<br>
+<h4>Subtitle:</h4>
+{{curso.subtitle}}
+<h4>Description:</h4>
+{{curso.description}}
+<h4>Categoria</h4>
+{{curso.category_id.name}}
+<h4>about_instructor</h4>
+{{curso.about_instructor}}
+<h4>Playlist URL:</h4>
+{{curso.playlist_url}}
+<h4>What will students learn:</h4>
+{{curso.what_will_students_learn}}
+<h4>Target students:</h4>
+{{curso.target_students}}
+<h4>Requirements:</h4>
+{{curso.requirements}}
+<h4>Discount price</h4>
+{{curso.discount_price}}
+<h4>Actual price</h4>
+{{curso.actual_price}}
+{% endblock %}

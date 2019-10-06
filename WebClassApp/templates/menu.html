@@ -1,0 +1,16 @@
+<nav>
+  <ul>
+    <li><a href="{% url 'mainpage:index'%}">Home</a></li>
+    {% if is_superuser %}
+      <li> <a href="{% url 'admin:index' %}">Admin</a></li>
+    {% endif %}
+    {% if is_user  %}
+      <li><a href="{% url 'mainpage:logout' %}">Logout</a></li>
+    {% else %}
+      <li><a href="{% url 'mainpage:login' %}">Login</a></li>
+      <li><a href="{% url 'mainpage:register'%}">Register</a></li>
+    {% endif %}
+    <li><a href="{% url 'categorias:index' %}">Categorias</a></li>
+    <li><a href="{% url 'cursos:index' %}">Cursos</a></li>
+  </ul>
+</nav>
