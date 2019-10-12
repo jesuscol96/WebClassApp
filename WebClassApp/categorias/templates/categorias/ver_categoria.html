@@ -1,8 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>{{categoria.name}}</h2>
-<br>
-<h3>Description:</h3>
-{{categoria.description}}
+<div class="limiter">
+    <div class="container-login100 LartoDj">
+      	<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+			<div class="jumbotron">
+			  <h1 class="display-4">{{categoria.name}}</h1>
+			  <p class="lead">{{categoria.description}}</p>
+			  <hr class="my-4">   
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
 {% endblock %}

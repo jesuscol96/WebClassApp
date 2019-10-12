@@ -1,13 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <a href="{% url 'categorias:crear_categoria' %}">New category</a>
+<div class="limiter">
+    <div class="container-login100 LartoDj">
+	  
 
-<br>
-  Categories:
-  <ul>
-    {% for category in categorias  %}
-      <li><a href="{% url 'categorias:ver_categoria' category.id %}">{{category.name}}</a></li>
-    {% endfor %}
-  </ul>
+
+			<div class="card text-white bg-warning mb-3" style="width: 60rem;">
+		  	<div class="card-body"> 
+		  	<h1 class="card-title"> <a href="{% url 'categorias:crear_categoria' %}">New category</a>	    
+			    
+		  		
+		  	</div>
+			</div>
+
+		  	<div class="card text-white bg-dark mb-3" style="width: 60rem;">
+		  	<div class="card-body text-white">
+			    <h1 class="card-title">Categorias:	    
+			    {% for category in categorias  %}
+			      <li><a href="{% url 'categorias:ver_categoria' category.id %}">{{category.name}}</a></li>
+			    {% endfor %}</p>
+			    </h1>
+		  	</div>
+			</div>
+	
+	</div>
+</div>
+
 {% endblock %}
