@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -25,15 +25,18 @@ def index(request):
 
 @login_required
 def crear_categoria(request):
-    context = {
-        'is_user': request.user.is_authenticated,
-    }
-    return render(request,'categorias/crear_categorias.html',context)
+    return render(request,'categorias/crear_categorias.html')
+
+def delete_category(request,pk):
+    categoria = get_object_or_404(Categories,pk=pk)
+    if request.method == 'POST':         # If method is POST,
+        categoria.delete()                     # delete the cat.
+        return HttpResponseRedirect(reverse('categorias:index'))
+    return render(request,'categorias/index.html')
 
 def process_new_categories(request):
     name = request.POST['name']
     description = request.POST['description']
-
     categoria= Categories(name=name,description=description,view_count=1)
     categoria.save()
     return HttpResponseRedirect(reverse('categorias:index'))
