@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from django.urls import reverse
-from .models import Courses
+from .models import Courses, CourseUser
 from categorias.models import Categories
 # Create your views here.
 
@@ -73,7 +73,42 @@ def ver_curso(request,curso_id):
         'is_user': request.user.is_authenticated,
         'username': username,
         'is_superuser' : is_superuser,
-        'curso': curso,    
+        'curso': curso,
     }
 
     return render(request,'cursos/ver_curso.html',context)
+
+@login_required
+def process_subscribe(request,curso_id):
+    user = request.user
+    curso = Courses.objects.get(id=curso_id)
+
+    subscription = CourseUser(course_id=curso,
+                              user_id=user,
+                              status=1)
+    subscription.save()
+    return HttpResponseRedirect(reverse('cursos:index'))
+
+@login_required
+def ver_subscriptions(request):
+    user = request.user
+    is_subs = True
+    msg='ok'
+    try:
+        cursos_user = CourseUser.objects.filter(user_id=user.id)
+    except:
+        msg="No subscriptions"
+        cursos='none'
+        is_subs = False
+    else:
+        cursos=[]
+        for curso in cursos_user:
+            cursos.append(curso.course_id)
+
+    context={
+        'cursos': cursos,
+        'msg': msg,
+        'is_subs': is_subs
+    }
+
+    return render(request,'cursos/subscriptions.html',context)

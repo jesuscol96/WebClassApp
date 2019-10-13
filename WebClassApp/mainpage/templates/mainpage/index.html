@@ -2,8 +2,14 @@
 {% block content %}
     <div class="jumbotron jumbotron-fluid LartoDj" style="height: 100vh; padding-top: 250px">
         <div class="container col-12">
-            <h1 class="display-3 text-center lightblack mb-5 "><i class="fab fa-php mr-3"></i>Laravel in Django <i
+            <h1 class="display-3 text-center lightblack mb-5 "><i class="fab fa-php mr-3"></i>
+            Welcome to Web Class App!               <i
                     class="fab fa-python ml-2"></i> </h1>
+        </div>
+        <div class="display-4">
+          {% if is_user %}
+                  We are glad to see you <b>{{username}}</b>. You are a {{role}}.
+          {% endif %}
         </div>
         <div class="container col-12">
             <div class="row col-12 text-center center-block">
@@ -18,10 +24,10 @@
                     <a class="btn btn-outline-success  col-1 float-center mx-2"><i class="far fa-sun mr-1"></i>NOVA</a>
                     <a class="btn btn-outline-success col-1 float-center mx-2 "><i class="fab fa-git mr-1"></i>FORGE</a>
                     <a class="btn btn-outline-success col-1 float-center mx-2"><i class="fas fa-tint mr-1"></i>VAPOR</a>
-                    <a class="btn btn-outline-success col-1 float-center mx-2"><i
+                    <a class="btn btn-outline-success col-1 float-center mx-2" href="https://github.com/jesuscol96/WebClassApp"><i
                             class="fab fa-github mr-1"></i>GITHUB</a>
                 </div>
             </div>
         </div>
     </div>
-{% endblock %}
+    {% endblock %}
