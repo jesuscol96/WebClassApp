@@ -1,15 +1,67 @@
 {% extends "base.html" %}
-
+{% load static%}
 {% block content %}
 
-{% if is_instructor %}
-  <a href="{% url 'cursos:crear_curso' %}">New course</a>
-{% endif %}
-<br>
-  Cursos:
-  <ul>
-    {% for curso in cursos  %}
-      <li><a href="{% url 'cursos:ver_curso' curso.id %}">{{curso.title}}</a></li>
-    {% endfor %}
-  </ul>
+
+<div class="container col-12 py-2 LartoDj ">
+
+	<div class="jumbotron text-center lightDj" >
+			<div class="container">
+			<h1 class="jumbotron-heading">Courses</h1>
+			<p class="lead text-muted">En esta sección se pueden ver todos los cursos existentes en esta página</p>
+			{% if is_instructor %}
+			<p>
+				<a href="{% url 'cursos:crear_curso' %}">New course</a>
+				<a href="#" class="btn btn-secondary my-2">Delete Course</a>
+			</p>
+			{% endif %}
+			</div>
+		</div>
+
+
+	<div class="container-fluid main-cont">
+		<div class="row news-row">
+			<div class="container-fluid col-md-12 col-sm-6 justify-content-center news-block">
+				<div class="card-group">
+					{% for curso in cursos  %}
+						<div class="underlay">
+							<div class="card">
+								<div class="card-img-top" style="background-image: url('https://i.imgur.com/wLMJQPH.png')"></div>
+								<div class="card-block" >
+								<h5 class="card-title" style="font-family: 'Anton', sans-serif">{{curso.title}}<hr></h5>
+								<p class="card-text" >{{curso.subtitle}} <a href="{% url 'cursos:ver_curso' curso.id %}"><u>Read More...</u></a></p>
+								<p class="card-text"><small class="text-muted">Last updated ? mins ago</small></p>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container LartoDj" style="height: 100px"></div>
+</div>
+<!------------------------>
+<!--=======Scripts======-->
+<script src="{% static "js/jquery-3.1.1.min.js" %}"></script>
+<script name="toggle-grid" type="text/javascript">
+$(document).ready(function(){
+  $(document).on("keypress", function(event) {
+    // If 'alt + g' keys are pressed:
+    if (event.which === 169){
+        $('#toggle-grid').toggle();
+     }
+  });
+
+  $('#toggle-grid').on("click"
+  , function() {
+      $('.pixel-grid').toggle();
+      $('#toggle-grid').toggleClass('orange');
+    });
+});
+</script>
+
+
 {% endblock %}
