@@ -3,7 +3,12 @@
 
 
 {% block content %}
-<h2>{{curso.title}}</h2>
+
+
+<div class="limiter">
+    <div class="container-login100 LartoDj">
+      	<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+<h1>{{curso.title}}</h2>
 <br>
 {% if is_student %}
 <a href="{% url 'cursos:process_subscribe' curso.id %}">Subscribe!</a>
@@ -28,4 +33,15 @@
 {{curso.discount_price}}
 <h4>Actual price</h4>
 {{curso.actual_price}}
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
 {% endblock %}
