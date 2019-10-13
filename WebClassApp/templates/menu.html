@@ -1,18 +1,21 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#"><i class="fas fa-code-branch mr-2 text-success"></i> Django</a>
+  <a class="navbar-brand" href="#"><i class="fas fa-code-branch mr-2 text-success"></i> E-learning</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <div class="container-fluid col-8">
-      <ul class="navbar-nav mr-auto">      
+      <ul class="navbar-nav mr-auto">
         <li><a class="nav-link" href="{% url 'mainpage:index'%}"><i class="fas fa-home mr-1 text-success"></i>Home</a></li>
         {% if is_superuser %}
           <li> <a class="nav-link" href="{% url 'admin:index' %}"><i class="fas fa-user-shield mr-1 text-success"></i>Admin</a></li>
         {% endif %}
         <li><a class="nav-link" href="{% url 'categorias:index' %}"><i class="fas fa-cubes mr-1 text-success"></i>Categorías</a></li>
         <li><a class="nav-link" href="{% url 'cursos:index' %}"><i class="fas fa-book-open mr-1 text-success"></i>Cursos</a></li>
+        {% if is_student %}
+          <li> <a class="nav-link" href="{% url 'cursos:subscriptions' %}"><i class="fas fa-user-shield mr-1 text-success"></i>Subscriptions</a></li>
+        {% endif %}
     </div>
     <div class="container-fluid col-4">
         {% if is_user  %}

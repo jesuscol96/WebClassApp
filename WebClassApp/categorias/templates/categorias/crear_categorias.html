@@ -8,7 +8,7 @@
         <form action="{% url 'categorias:process_new_categories' %}"  method="post">
         {% csrf_token %}
           <span class="login100-form-title p-b-49">
-            <i class="fas fa-book mr-3"></i></i>Crear Categorías
+            <i class="far fa-address-card mr-3"></i>Crear Categorias
           </span>
 
           <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
@@ -16,13 +16,13 @@
             <input class="input100" type="text" name="name" placeholder="Type the name of the category">
             <span class="focus-input100"></span>
           </div>
-          
+
           <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
             <span class="label-input100">Description</span>
             <input class="input100" type="text" name="description" placeholder="Type the description of the category">
             <span class="focus-input100"></span>
           </div>
-          
+
           <div class="container-login100-form-btn mt-5">
             <div class="wrap-login100-form-btn">
               <div class="login100-form-bgbtn"></div>

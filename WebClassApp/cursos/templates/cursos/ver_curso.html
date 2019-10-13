@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 
+
+
 {% block content %}
 <h2>{{curso.title}}</h2>
 <br>
+<a href="{% url 'cursos:process_subscribe' curso.id %}">Subscribe!</a>
+
 <h4>Subtitle:</h4>
 {{curso.subtitle}}
 <h4>Description:</h4>
