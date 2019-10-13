@@ -6,11 +6,6 @@
             Welcome to Web Class App!               <i
                     class="fab fa-python ml-2"></i> </h1>
         </div>
-        <div class="display-4">
-          {% if is_user %}
-                  We are glad to see you <b>{{username}}</b>. You are a {{role}}.
-          {% endif %}
-        </div>
         <div class="container col-12">
             <div class="row col-12 text-center center-block">
                 <div class="col-md-12 col-md-offset-5">
@@ -28,6 +23,14 @@
                             class="fab fa-github mr-1"></i>GITHUB</a>
                 </div>
             </div>
+            {% if is_user %}
+                <div class="jumbotron mt-5 LartoDjc">
+                    <div class="display-4 text-center">
+                        <i class="far fa-smile-beam mr-3"></i>We are glad to see you <b>{{username}}</b>. You are a {{role}}.
+                    </div>
+                </div>
+            {% endif %}
         </div>
+        <div class="container col-12 LartoDj" style="height: 90px"></div>
     </div>
     {% endblock %}
