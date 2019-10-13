@@ -26,18 +26,18 @@
 		<div class="row news-row">
 			<div class="container-fluid col-md-12 col-sm-6 justify-content-center news-block">
 				<div class="card-group">
-				{% for category in categorias  %}
-				<div class="underlay">
-					<div class="card">
-						<div class="card-img-top" style="background-image: url('https://i.imgur.com/wLMJQPH.png')"></div>
-						<div class="card-block" >
-						<h5 class="card-title" style="font-family: 'Anton', sans-serif">{{category.name}}<hr></h5>
-						<p class="card-text" >{{category.description}} <a href="{% url 'categorias:ver_categoria' category.id %}"><u>Read More...</u></a></p>
-						<p class="card-text"><small class="text-muted">Last updated ? mins ago</small></p>
+					{% for category in categorias  %}
+						<div class="underlay">
+							<div class="card">
+								<div class="card-img-top" style="background-image: url('https://i.imgur.com/wLMJQPH.png')"></div>
+								<div class="card-block" >
+								<h5 class="card-title" style="font-family: 'Anton', sans-serif">{{category.name}}<hr></h5>
+								<p class="card-text" >{{category.description}} <a href="{% url 'categorias:ver_categoria' category.id %}"><u>Read More...</u></a></p>
+								<p class="card-text"><small class="text-muted">Last updated ? mins ago</small></p>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-				{% endfor %}
+					{% endfor %}
 				</div>
 			</div>
 		</div>
