@@ -31,7 +31,9 @@ def crear_curso(request):
     categorias = Categories.objects.all()
     return render(request,'cursos/crear_curso.html',{'categorias':categorias})
 
+@login_required
 def process_new_curso(request):
+    user = request.user
     title = request.POST['title']
     subtitle = request.POST['subtitle']
     description = request.POST['description']
@@ -57,7 +59,9 @@ def process_new_curso(request):
                    actual_price=actual_price,
                    admin_status=1,
                    creator_status=1,
-                   view_count=1)
+                   view_count=1,
+                   user_id = user
+                   )
     curso.save()
     return HttpResponseRedirect(reverse('cursos:index'))
 
@@ -94,9 +98,8 @@ def ver_subscriptions(request):
     user = request.user
     is_subs = True
     msg='ok'
-    try:
-        cursos_user = CourseUser.objects.filter(user_id=user.id)
-    except:
+    cursos_user = CourseUser.objects.filter(user_id=user.id)
+    if len(cursos_user)==0:
         msg="No subscriptions"
         cursos='none'
         is_subs = False
@@ -112,3 +115,21 @@ def ver_subscriptions(request):
     }
 
     return render(request,'cursos/subscriptions.html',context)
+
+@login_required
+def my_courses(request):
+    user = request.user
+    is_cursos = True
+    msg='ok'
+    cursos= Courses.objects.filter(user_id=user.id)
+    if len(cursos)==0:
+        msg="No courses"
+        cursos='none'
+        is_cursos = False
+
+    context={
+        'cursos': cursos,
+        'msg': msg,
+        'is_cursos': is_cursos
+    }
+    return render(request,'cursos/my_courses.html',context)

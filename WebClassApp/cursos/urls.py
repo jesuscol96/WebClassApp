@@ -10,5 +10,6 @@ urlpatterns = [
     path('ver_curso/<int:curso_id>', views.ver_curso, name='ver_curso'),
     path('subscribe/<int:curso_id>', views.process_subscribe, name='process_subscribe'),
     path('subscriptions', views.ver_subscriptions, name='subscriptions'),
+    path('my_courses', views.my_courses, name='my_courses'),
 
 ]

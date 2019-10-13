@@ -16,6 +16,9 @@
         {% if is_student %}
           <li> <a class="nav-link" href="{% url 'cursos:subscriptions' %}"><i class="fas fa-user-shield mr-1 text-success"></i>Subscriptions</a></li>
         {% endif %}
+        {% if is_instructor %}
+          <li> <a class="nav-link" href="{% url 'cursos:my_courses' %}"><i class="fas fa-user-shield mr-1 text-success"></i>My courses</a></li>
+        {% endif %}
     </div>
     <div class="container-fluid col-4">
         {% if is_user  %}

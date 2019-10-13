@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if is_cursos %}
+My courses:
+
+{% for curso in cursos %}
+<ul>
+  <li><a href="{% url 'cursos:ver_curso' curso.id %}">{{curso.title}}</a></li>
+</ul>
+
+{% endfor %}
+
+{% else %}
+{{msg}}
+{% endif %}
+
+
+{% endblock %}

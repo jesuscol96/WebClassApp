@@ -17,18 +17,21 @@ def index(request):
         role = details.role_id
         role = role.name
         is_student = role=='Student'
+        is_instructor = role=='Instructor'
     else:
         username = 'none'
         is_superuser = False
         role = 'none'
         is_student = False
+        is_instructor = False
 
     context = {
         'is_user': request.user.is_authenticated,
         'username': username,
         'is_superuser' : is_superuser,
         'role': role,
-        'is_student': is_student
+        'is_student': is_student,
+        'is_instructor': is_instructor
     }
     return render(request,'mainpage/index.html',context)
 

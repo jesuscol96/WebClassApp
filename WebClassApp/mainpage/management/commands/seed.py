@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from mainpage.models import Roles
 
 # import UserFactory here
-roles = ['Student','Instructor','Moderator','Admin']
+roles = ['Student','Instructor']
 class Command(BaseCommand):
     help = 'Seeds the database.'
 
