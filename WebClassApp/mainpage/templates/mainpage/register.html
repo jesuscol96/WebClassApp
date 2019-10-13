@@ -35,6 +35,36 @@
 						<span class="focus-input100"></span>
 					</div>
 
+					<div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+					 <span class="label-input100">Phone: </span>
+					 <input class="input100" type="phone" name="phone" placeholder="Type your phone">
+					 <span class="focus-input100"></span>
+				 </div>
+
+				 <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+					<span class="label-input100">Gender</span><br>
+					<input type="radio" name="gender" value="male"> Male<br>
+					<input type="radio" name="gender" value="female"> Female<br>
+					<input type="radio" name="gender" value="other"> Other
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+				 <span class="label-input100">Date of birth: </span>
+				 <input class="input100" type="date" name="date_of_birth">
+				 <span class="focus-input100"></span>
+			 </div>
+
+			 <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+				<span class="label-input100">Role: </span>
+				<select class="label-input100" name="role">
+					{% for role in roles %}
+						<option value="{{role.id}}">{{ role.name }}</option>
+					{% endfor %}
+				</select>
+				<span class="focus-input100"></span>
+			</div>
+
 					<div class="wrap-input100 validate-input" data-validate="Password is required">
 						<span class="label-input100">Password</span>
 						<input class="input100" type="password" name="password" placeholder="Type your password">
