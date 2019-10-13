@@ -9,3 +9,7 @@
     password = su_clave  <br>
     default-character-set = utf8 <br>
     - Ejecutar el comando **python manage.py migrate**
+    - Ejecutar el comando **python manage.py seed**
+- Crear un usuario admin:
+  - Ejecutar el comando **python manage.py createsuperuser**
+  - Ingresar la información solicitada.
