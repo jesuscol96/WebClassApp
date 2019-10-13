@@ -6,14 +6,27 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .models import Courses, CourseUser
 from categorias.models import Categories
+from mainpage.models import *
 # Create your views here.
 
 
 # Create your views here.
 def index(request):
     if request.user.is_authenticated:
+        user = request.user
         username = request.user.username
         is_superuser = request.user.is_superuser
+        details = Users_details.objects.filter(user_id=user.id)
+        if len(details)>0:
+            details=details[0]
+            role = details.role_id
+            role = role.name
+            is_student = role=='Student'
+            is_instructor = role=='Instructor'
+        else:
+            role = 'none'
+            is_student = False
+            is_instructor = False
     else:
         username = 'none'
         is_superuser = False
@@ -23,6 +36,9 @@ def index(request):
         'username': username,
         'is_superuser' : is_superuser,
         'cursos': cursos,
+        'is_student': is_student,
+        'is_instructor': is_instructor
+
     }
     return render(request,'cursos/index.html',context)
 
@@ -67,8 +83,20 @@ def process_new_curso(request):
 
 def ver_curso(request,curso_id):
     if request.user.is_authenticated:
+        user = request.user
         username = request.user.username
         is_superuser = request.user.is_superuser
+        details = Users_details.objects.filter(user_id=user.id)
+        if len(details)>0:
+            details=details[0]
+            role = details.role_id
+            role = role.name
+            is_student = role=='Student'
+            is_instructor = role=='Instructor'
+        else:
+            role = 'none'
+            is_student = False
+            is_instructor = False
     else:
         username = 'none'
         is_superuser = False
@@ -78,6 +106,8 @@ def ver_curso(request,curso_id):
         'username': username,
         'is_superuser' : is_superuser,
         'curso': curso,
+        'is_student': is_student,
+        'is_instructor': is_instructor
     }
 
     return render(request,'cursos/ver_curso.html',context)
