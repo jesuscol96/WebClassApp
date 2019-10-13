@@ -25,7 +25,10 @@ def index(request):
 
 @login_required
 def crear_categoria(request):
-    return render(request,'categorias/crear_categorias.html')
+    context = {
+        'is_user': request.user.is_authenticated,
+    }
+    return render(request,'categorias/crear_categorias.html',context)
 
 def process_new_categories(request):
     name = request.POST['name']
