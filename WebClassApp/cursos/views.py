@@ -44,8 +44,10 @@ def index(request):
 
 @login_required
 def crear_curso(request):
-    categorias = Categories.objects.all()
-    return render(request,'cursos/crear_curso.html',{'categorias':categorias})
+    if role.name != 'Student':
+        categorias = Categories.objects.all()
+        return render(request,'cursos/crear_curso.html',{'categorias':categorias})
+
 
 @login_required
 def process_new_curso(request):
