@@ -6,31 +6,49 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .models import Courses, CourseUser
 from categorias.models import Categories
+from mainpage.models import *
 # Create your views here.
 
 
 # Create your views here.
 def index(request):
     if request.user.is_authenticated:
+        user = request.user
         username = request.user.username
         is_superuser = request.user.is_superuser
+        details = Users_details.objects.filter(user_id=user.id)
+        if len(details)>0:
+            details=details[0]
+            role = details.role_id
+            role = role.name
+            is_student = role=='Student'
+            is_instructor = role=='Instructor'
+        else:
+            role = 'none'
+            is_student = False
+            is_instructor = False
     else:
         username = 'none'
         is_superuser = False
+        role = 'none'
+        is_student = False
+        is_instructor = False
     cursos = Courses.objects.all()
     context = {
         'is_user': request.user.is_authenticated,
         'username': username,
         'is_superuser' : is_superuser,
         'cursos': cursos,
+        'is_student': is_student,
+        'is_instructor': is_instructor
+
     }
     return render(request,'cursos/index.html',context)
 
 @login_required
-def crear_curso(request):
-    if role.name != 'Student':
-        categorias = Categories.objects.all()
-        return render(request,'cursos/crear_curso.html',{'categorias':categorias})
+def crear_curso(request):    
+    categorias = Categories.objects.all()
+    return render(request,'cursos/crear_curso.html',{'categorias':categorias})
 
 
 @login_required
@@ -69,17 +87,34 @@ def process_new_curso(request):
 
 def ver_curso(request,curso_id):
     if request.user.is_authenticated:
+        user = request.user
         username = request.user.username
         is_superuser = request.user.is_superuser
+        details = Users_details.objects.filter(user_id=user.id)
+        if len(details)>0:
+            details=details[0]
+            role = details.role_id
+            role = role.name
+            is_student = role=='Student'
+            is_instructor = role=='Instructor'
+        else:
+            role = 'none'
+            is_student = False
+            is_instructor = False
     else:
         username = 'none'
         is_superuser = False
+        role = 'none'
+        is_student = False
+        is_instructor = False
     curso=Courses.objects.get(id=curso_id)
     context = {
         'is_user': request.user.is_authenticated,
         'username': username,
         'is_superuser' : is_superuser,
         'curso': curso,
+        'is_student': is_student,
+        'is_instructor': is_instructor
     }
 
     return render(request,'cursos/ver_curso.html',context)
@@ -97,7 +132,27 @@ def process_subscribe(request,curso_id):
 
 @login_required
 def ver_subscriptions(request):
-    user = request.user
+    if request.user.is_authenticated:
+        user = request.user
+        username = request.user.username
+        is_superuser = request.user.is_superuser
+        details = Users_details.objects.filter(user_id=user.id)
+        if len(details)>0:
+            details=details[0]
+            role = details.role_id
+            role = role.name
+            is_student = role=='Student'
+            is_instructor = role=='Instructor'
+        else:
+            role = 'none'
+            is_student = False
+            is_instructor = False
+    else:
+        username = 'none'
+        is_superuser = False
+        role = 'none'
+        is_student = False
+        is_instructor = False
     is_subs = True
     msg='ok'
     cursos_user = CourseUser.objects.filter(user_id=user.id)
@@ -113,14 +168,40 @@ def ver_subscriptions(request):
     context={
         'cursos': cursos,
         'msg': msg,
-        'is_subs': is_subs
+        'is_subs': is_subs,
+        'is_user': request.user.is_authenticated,
+        'username': username,
+        'is_superuser' : is_superuser,
+        'cursos': cursos,
+        'is_student': is_student,
+        'is_instructor': is_instructor
     }
 
     return render(request,'cursos/subscriptions.html',context)
 
 @login_required
 def my_courses(request):
-    user = request.user
+    if request.user.is_authenticated:
+        user = request.user
+        username = request.user.username
+        is_superuser = request.user.is_superuser
+        details = Users_details.objects.filter(user_id=user.id)
+        if len(details)>0:
+            details=details[0]
+            role = details.role_id
+            role = role.name
+            is_student = role=='Student'
+            is_instructor = role=='Instructor'
+        else:
+            role = 'none'
+            is_student = False
+            is_instructor = False
+    else:
+        username = 'none'
+        is_superuser = False
+        role = 'none'
+        is_student = False
+        is_instructor = False
     is_cursos = True
     msg='ok'
     cursos= Courses.objects.filter(user_id=user.id)
@@ -132,6 +213,12 @@ def my_courses(request):
     context={
         'cursos': cursos,
         'msg': msg,
-        'is_cursos': is_cursos
+        'is_cursos': is_cursos,
+        'is_user': request.user.is_authenticated,
+        'username': username,
+        'is_superuser' : is_superuser,
+        'cursos': cursos,
+        'is_student': is_student,
+        'is_instructor': is_instructor
     }
     return render(request,'cursos/my_courses.html',context)

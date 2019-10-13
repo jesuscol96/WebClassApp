@@ -17,7 +17,12 @@
             {% if is_user %}
                 <div class="jumbotron mt-5 LartoDjc">
                     <div class="display-4 text-center">
-                        <i class="far fa-smile-beam mr-3"></i>We are glad to see you <b>{{username}}</b>. You are a {{role}}.
+                        <i class="far fa-smile-beam mr-3"></i>We are glad to see you <b>{{username}}</b>.
+                        {% if is_superuser %}
+                          You are admin (powerful!).
+                        {% else %}
+                          You are a {{role}}.
+                        {% endif %}
                     </div>
                 </div>
             {% endif %}

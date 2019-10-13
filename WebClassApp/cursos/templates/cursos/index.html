@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-  {% if is_student  %}
-    <a href="{% url 'cursos:crear_curso' %}">New course</a>
-  {% endif %}
+
+{% if is_instructor %}
+  <a href="{% url 'cursos:crear_curso' %}">New course</a>
+{% endif %}
 <br>
   Cursos:
   <ul>

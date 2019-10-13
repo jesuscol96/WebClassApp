@@ -1,67 +1,98 @@
 {% extends "base.html" %}
 
 {% block content  %}
+
 <div class="limiter">
     <div class="container-login100 LartoDj">
-    <form action="{% url 'cursos:process_new_curso' %}"  method="post">
-    {% csrf_token %}
-      <table>
-        <tr>
-          <td>Title:</td>
-          <td><input type="text" name="title"></td>
-        </tr>
-        <tr>
-          <td>Subtitle:</td>
-          <td><input type="text" name="subtitle"></td>
-        </tr>
-        <tr>
-          <td>Description:</td>
-          <td><input type="text" name="description"></td>
-        </tr>
-        <tr>
-          <td>Categoria:</td>
-          <td>
+      <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+        <form action="{% url 'cursos:process_new_curso' %}"  method="post">
+        {% csrf_token %}
+          <span class="login100-form-title p-b-49">
+            <i class="far fa-address-card mr-3"></i>Create courses:
+          </span>
+
+          <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+            <span class="label-input100">Title</span>
+            <input class="input100" type="text" name="title" placeholder="Type the title of the course">
+            <span class="focus-input100"></span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+            <span class="label-input100">Subtitle</span>
+            <input class="input100" type="text" name="subtitle" placeholder="Type the subtitle of the course">
+            <span class="focus-input100"></span>
+          </div>          
+
+          <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+            <span class="label-input100">Description</span>
+            <input class="input100" type="text" name="description" placeholder="Type the description of the course">
+            <span class="focus-input100"></span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+            <span class="label-input100">Categories:</span>
             <select  name="categoria">
               {% for categoria in categorias  %}
                 <option value="{{categoria.id}}">{{categoria.name}}</option>
               {% endfor %}
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td>About instructor:</td>
-          <td><input type="text" name="about_instructor"></td>
-        </tr>
-        <tr>
-          <td>Playlist URL:</td>
-          <td><input type="text" name="playlist_url"></td>
-        </tr>
-        <tr>
-          <td>What will students learn:</td>
-          <td><input type="text" name="what_will_students_learn"></td>
-        </tr>
-        <tr>
-          <td>Target students:</td>
-          <td><input type="text" name="target_students"></td>
-        </tr>
-        <tr>
-          <td>Requirements:</td>
-          <td><input type="text" name="requirements"></td>
-        </tr>
-        <tr>
-          <td>Discount price:</td>
-          <td><input type="text" name="discount_price"></td>
-        </tr>
-        <tr>
-          <td>Actual price:</td>
-          <td><input type="text" name="actual_price"></td>
-        </tr>
-        <tr>
-          <td colspan="2" align="center"><input type="submit"  value="Create"> </td>
-        </tr>
-      </table>
-    </form>
-  </div>   
-</div>
+            </select>            
+            <span class="focus-input100"></span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+            <span class="label-input100">About instructor:</span>
+            <input class="input100" type="text" name="about_instructor" placeholder="Type the information about the instructor">
+            <span class="focus-input100"></span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+            <span class="label-input100">Playlist URL:</span>
+            <input class="input100" type="text" name="playlist_url" placeholder="Type the Playlist URL">
+            <span class="focus-input100"></span>
+          </div>          
+
+          <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+            <span class="label-input100">What will students learn:</span>
+            <input class="input100" type="text" name="what_will_students_learn" placeholder="Type What will students learn in the course">
+            <span class="focus-input100"></span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+            <span class="label-input100">Target students:</span>
+            <input class="input100" type="text" name="target_students" placeholder="Type the target students of the category">
+            <span class="focus-input100"></span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+            <span class="label-input100">Requirements:</span>
+            <input class="input100" type="text" name="requirements" placeholder="Type the requirements of the course">
+            <span class="focus-input100"></span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+            <span class="label-input100">Discount price:</span>
+            <input class="input100" type="text" name="discount_price" placeholder="Type the discount price of the category">
+            <span class="focus-input100"></span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+            <span class="label-input100">Actual price:</span>
+            <input class="input100" type="text" name="actual_price" placeholder="Type the actual price of the category">
+            <span class="focus-input100"></span>
+          </div>                                       
+
+          <div class="container-login100-form-btn mt-5">
+            <div class="wrap-login100-form-btn">
+              <div class="login100-form-bgbtn"></div>
+              <button class="login100-form-btn">
+                <input type="submit"  value=''> Create
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
