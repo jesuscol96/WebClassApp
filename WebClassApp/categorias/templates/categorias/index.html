@@ -34,7 +34,7 @@
 								<div class="card-img-top" style="background-image: url('https://i.imgur.com/wLMJQPH.png')"></div>
 								<div class="card-block" >
 								<h5 class="card-title" style="font-family: 'Anton', sans-serif">{{category.name}}<hr></h5>
-								<p class="card-text" >{{category.description}} <br><br><a class="btn-sm btn-outline-primary ml-2 text-white" href="{% url 'categorias:ver_categoria' category.id %}">Read More</a></p>
+								<p class="card-text" >{{category.description}} <a href="{% url 'categorias:ver_categoria' category.id %}"><u>Read More...</u></a></p>
 								</div>
 							</div>
 						</div>
