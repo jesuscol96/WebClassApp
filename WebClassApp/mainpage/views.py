@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
 from django.urls import reverse
+from .models import Roles, Users_details
 
 # Create your views here.
 
@@ -37,7 +38,9 @@ def logout_view(request):
     return HttpResponseRedirect(reverse('mainpage:index'))
 
 def register(request):
-    return render(request,'mainpage/register.html')
+    roles = Roles.objects.all()
+    context = {'roles':roles,}
+    return render(request,'mainpage/register.html',context)
 
 def process_register(request):
     username = request.POST['username']
@@ -45,11 +48,22 @@ def process_register(request):
     firstname = request.POST['firstname']
     lastname = request.POST['lastname']
     password  = request.POST['password']
+    phone  = request.POST['phone']
+    gender  = request.POST['gender']
+    date_of_birth  = request.POST['date_of_birth']
+    role  = Roles.objects.get(id=request.POST['role'])
     user = User.objects.create_user(username=username,
                                     password=password,
                                     email=email,
                                     first_name=firstname,
                                     last_name=lastname)
     user.save()
+    details=Users_details(user_id = user,
+                  phone=phone,
+                  gender=gender,
+                  date_of_birth=date_of_birth,
+                  role_id=role,
+                  view_count=1)
+    details.save()
     login(request,user)
     return HttpResponseRedirect(reverse('mainpage:index'))
