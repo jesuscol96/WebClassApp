@@ -1,35 +1,3 @@
-<<<<<<< HEAD
-{% extends "base.html" %}
-
-{% block content %}
-<div class="limiter">
-    <div class="container-login100 LartoDj">
-	  
-
-
-			<div class="card text-white bg-warning mb-3" style="width: 60rem;">
-		  	<div class="card-body"> 
-		  	<h1 class="card-title"> <a href="{% url 'categorias:crear_categoria' %}">New category</a>	    
-			    
-		  		
-		  	</div>
-			</div>
-
-		  	<div class="card text-white bg-dark mb-3" style="width: 60rem;">
-		  	<div class="card-body text-white">
-			    <h1 class="card-title">Categorias:	    
-			    {% for category in categorias  %}
-			      <li><a href="{% url 'categorias:ver_categoria' category.id %}">{{category.name}}</a></li>
-			    {% endfor %}</p>
-			    </h1>
-		  	</div>
-			</div>
-	
-	</div>
-</div>
-
-{% endblock %}
-=======
 {% extends "base.html" %}
 {% load static%}
 {% block content %}
@@ -46,7 +14,7 @@
 			</p>
 			</div>
 		</div>
-		
+
 	<!--======Pixel Grid======-->
 
 <!------------------------->
@@ -74,7 +42,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="container LartoDj" style="height: 100px"></div>
 </div>
 <!------------------------>
@@ -98,4 +66,3 @@ $(document).ready(function(){
 </script>
 
 {% endblock %}
->>>>>>> 632a1d017534444a8170d7f76986519efbe84b3f
