@@ -29,6 +29,9 @@ class Courses(models.Model):
     class Meta:
         db_table = 'courses'
 
+    def __str__(self):
+        return self.title
+
 class CourseUser(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     course_id = models.ForeignKey(Courses, on_delete=models.CASCADE, blank=True, null=True)
