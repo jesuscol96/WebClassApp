@@ -2,14 +2,8 @@
 {% block content %}
     <div class="jumbotron jumbotron-fluid LartoDj" style="height: 100vh; padding-top: 250px">
         <div class="container col-12">
-            <h1 class="display-3 text-center lightblack mb-5 "><i class="fab fa-php mr-3"></i>
-            Welcome to Web Class App!               <i
-                    class="fab fa-python ml-2"></i> </h1>
-        </div>
-        <div class="display-4">
-          {% if is_user %}
-                  We are glad to see you <b>{{username}}</b>. You are a {{role}}.
-          {% endif %}
+            <h1 class="display-3 text-center lightblack mb-5 "><i class="fas fa-book mr-3"></i>
+            Welcome to Web Class App! <i class="fas fa-book-reader ml-3"></i>
         </div>
         <div class="container col-12">
             <div class="row col-12 text-center center-block">
@@ -28,6 +22,14 @@
                             class="fab fa-github mr-1"></i>GITHUB</a>
                 </div>
             </div>
+            {% if is_user %}
+                <div class="jumbotron mt-5 LartoDjc">
+                    <div class="display-4 text-center">
+                        <i class="far fa-smile-beam mr-3"></i>We are glad to see you <b>{{username}}</b>. You are a {{role}}.
+                    </div>
+                </div>
+            {% endif %}
         </div>
+        <div class="container col-12 LartoDj" style="height: 90px"></div>
     </div>
     {% endblock %}
