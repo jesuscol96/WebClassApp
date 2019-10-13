@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from categorias.models import Categories
 from cursos.models import Courses
+from django.contrib.auth.models import User
 
 class Roles(models.Model):
     name = models.CharField(max_length=255)
@@ -12,6 +13,9 @@ class Roles(models.Model):
     class Meta:
 
         db_table = 'roles'
+
+    def __str__(self):
+        return self.name
 
 class Users_details(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
@@ -31,6 +35,8 @@ class Users_details(models.Model):
 
     class Meta:
         db_table = 'users_details'
+    def __str__(self):
+        return self.user_id.username
 
 class PasswordResets(models.Model):
     email = models.CharField(max_length=255)
