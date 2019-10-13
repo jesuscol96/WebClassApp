@@ -2,21 +2,39 @@
 
 {% block content  %}
 
-<form action="{% url 'categorias:process_new_categories' %}"  method="post">
-{% csrf_token %}
-  <table>
-    <tr>
-      <td>Name:</td>
-      <td><input type="text" name="name"></td>
-    </tr>
-    <tr>
-      <td>Description:</td>
-      <td><input type="text" name="description"></td>
-    </tr>
-    <tr>
-      <td colspan="2" align="center"><input type="submit"  value="Create"> </td>
-    </tr>
-  </table>
-</form>
+<div class="limiter">
+    <div class="container-login100 LartoDj">
+      <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+        <form action="{% url 'categorias:process_new_categories' %}"  method="post">
+        {% csrf_token %}
+          <span class="login100-form-title p-b-49">
+            <i class="far fa-address-card mr-3"></i>Crear Categorias
+          </span>
+
+          <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+            <span class="label-input100">Name</span>
+            <input class="input100" type="text" name="name" placeholder="Type the name of the category">
+            <span class="focus-input100"></span>
+          </div>
+          
+          <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+            <span class="label-input100">Description</span>
+            <input class="input100" type="text" name="description" placeholder="Type the description of the category">
+            <span class="focus-input100"></span>
+          </div>
+          
+          <div class="container-login100-form-btn mt-5">
+            <div class="wrap-login100-form-btn">
+              <div class="login100-form-bgbtn"></div>
+              <button class="login100-form-btn">
+                <input type="submit"  value=''> Create
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
