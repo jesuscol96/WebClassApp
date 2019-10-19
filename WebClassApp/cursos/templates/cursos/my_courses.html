@@ -1,20 +1,72 @@
 {% extends "base.html" %}
-
+{% load static%}
 {% block content %}
 
 {% if is_cursos %}
-My courses:
+  <div class="container col-12 py-2 LartoDj">
 
-{% for curso in cursos %}
-<ul>
-  <li><a href="{% url 'cursos:ver_curso' curso.id %}">{{curso.title}}</a></li>
-</ul>
+    <div class="jumbotron text-center lightDj" >
+        <div class="container">
+          <h1 class="jumbotron-heading">My Courses:</h1>
+          <p class="lead text-muted">You can look at courses created by you in this section</p>
+        </div>
+    </div>
+  
 
-{% endfor %}
+<!--========Cards========-->
+    <div class="container-fluid main-cont">
+      <div class="row news-row">
+        <div class="container-fluid col-md-12 col-sm-6 justify-content-center news-block">
+          <div class="card-group">
+            {% for curso in cursos %}
+              <div class="underlay">
+                <div class="card">
+                  <div class="card-img-top" style="background-image: url('https://i.imgur.com/wLMJQPH.png')"></div>
+                  <div class="card-block" >
+                  <h5 class="card-title" style="font-family: 'Anton', sans-serif">{{curso.title}}<hr></h5>
+                  <p class="card-text" >{{curso.description}} <a href="{% url 'cursos:ver_curso' curso.id %}"><u>Read More...</u></a></p>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 {% else %}
-{{msg}}
+<div class="container col-12 py-2 LartoDj " style="height: 100vh">
+
+	<div class="jumbotron text-center lightDj" >
+			<div class="container">
+        <h1 class="jumbotron-heading">{{msg}}</h1>
+        <p class="lead text-muted">You don't have any courses</p>
+			</div>
+	</div>
+</div>
 {% endif %}
+
+<!--=======Scripts======-->
+<script src="{% static "js/jquery-3.1.1.min.js" %}"></script>
+<script name="toggle-grid" type="text/javascript">
+$(document).ready(function(){
+  $(document).on("keypress", function(event) {
+    // If 'alt + g' keys are pressed:
+    if (event.which === 169){
+        $('#toggle-grid').toggle();
+     }
+  });
+
+  $('#toggle-grid').on("click"
+  , function() {
+      $('.pixel-grid').toggle();
+      $('#toggle-grid').toggleClass('orange');
+    });
+});
+</script>
+
 
 
 {% endblock %}

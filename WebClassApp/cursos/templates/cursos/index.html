@@ -11,8 +11,8 @@
 			<p class="lead text-muted">En esta sección se pueden ver todos los cursos existentes en esta página</p>
 			{% if is_instructor %}
 			<p>
-				<a href="{% url 'cursos:crear_curso' %}">New course</a>
-				<a href="#" class="btn btn-secondary my-2">Delete Course</a>
+				<a class="btn btn-primary mx-2 my-2" href="{% url 'cursos:crear_curso' %}">New course</a>
+				<a href="#" class="btn btn-danger mx-2 my-2">Delete Course</a>
 			</p>
 			{% endif %}
 			</div>
