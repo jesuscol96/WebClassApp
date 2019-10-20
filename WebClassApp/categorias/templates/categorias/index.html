@@ -29,7 +29,7 @@
 								<div class="card-img-top" style="background-image: url('https://i.imgur.com/wLMJQPH.png')"></div>
 								<div class="card-block" >
 								<h5 class="card-title" style="font-family: 'Anton', sans-serif">{{category.name}}<hr></h5>
-								<p class="card-text" >{{category.description}} <a class="btn btn-primary mx-2 my-2" href="{% url 'categorias:ver_categoria' category.id %}">Read More...</a>
+								<p class="card-text" >{{category.description|safe}} <a class="btn btn-primary mx-2 my-2" href="{% url 'categorias:ver_categoria' category.id %}">Read More...</a>
 								</div>
 							</div>
 						</div>

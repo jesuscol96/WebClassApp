@@ -6,7 +6,7 @@
       	<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 			<div class="jumbotron">
 			  <h1 class="display-4">{{categoria.name}}</h1>
-			  <p class="lead">{{categoria.description}}</p>
+			  <p class="lead">{{categoria.description|safe}}</p>
 			  <hr class="my-4">
         {% if is_superuser %}
         <form action="{% url 'categorias:delete_category' categoria.id %}" method="post">
