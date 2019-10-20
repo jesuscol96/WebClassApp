@@ -24,7 +24,7 @@
                   <div class="card-img-top" style="background-image: url('https://i.imgur.com/wLMJQPH.png')"></div>
                   <div class="card-block" >
                   <h5 class="card-title" style="font-family: 'Anton', sans-serif">{{curso.title}}<hr></h5>
-                  <p class="card-text" >{{curso.description|safe}} <a href="{% url 'cursos:ver_curso' curso.id %}"><u>Read More...</u></a></p>
+                  <p class="card-text" >{{curso.description|safe}} <a class="btn btn-primary mx-2 my-2" href="{% url 'cursos:ver_curso' curso.id %}">Read More...</a> 
                   </div>
                 </div>
               </div>
