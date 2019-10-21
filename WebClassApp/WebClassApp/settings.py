@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'payment.apps.PaymentConfig',
+    'paypal.standard.ipn',
     'cursos.apps.CursosConfig',
     'categorias.apps.CategoriasConfig',
     'mainpage.apps.MainpageConfig',
@@ -129,3 +131,7 @@ STATICFILES_DIRS = ['', os.path.join(BASE_DIR, "static")
 ]
 
 LOGIN_URL = 'mainpage:login'
+
+#Djando paypal
+PAYPAL_RECEIVER_EMAIL = 'jesuscol096@gmail.com'
+PAYPAL_TEST = True

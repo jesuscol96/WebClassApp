@@ -22,4 +22,6 @@ urlpatterns = [
     path('', include('mainpage.urls')),
     path('categorias/', include('categorias.urls')),
     path('cursos/', include('cursos.urls')),
+    path('paypal/',include('paypal.standard.ipn.urls')),
+    path('payment/', include('payment.urls')),
 ]

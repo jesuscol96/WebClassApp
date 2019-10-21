@@ -13,6 +13,9 @@
         {% endif %}
         <li><a class="nav-link" href="{% url 'categorias:index' %}"><i class="fas fa-cubes mr-1 text-success"></i>Categorías</a></li>
         <li><a class="nav-link" href="{% url 'cursos:index' %}"><i class="fas fa-book-open mr-1 text-success"></i>Cursos</a></li>
+        {% if is_user %}
+        <li><a class="nav-link" href="{% url 'payment:index' %}"><i class="fas fa-book-open mr-1 text-success"></i>Payment</a></li>
+        {% endif %}        
         {% if is_student %}
           <li> <a class="nav-link" href="{% url 'cursos:subscriptions' %}"><i class="fas fa-user-shield mr-1 text-success"></i>Subscriptions</a></li>
         {% endif %}
