@@ -1,4 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 Payment site
+<br>
+{% if is_user %}
+<a href="{% url 'payment:process' %}">Pay a course</a>
+{% endif %}
+
 {% endblock %}
