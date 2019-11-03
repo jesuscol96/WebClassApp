@@ -11,7 +11,15 @@
 <h1>{{curso.title}}</h2>
 <br>
 {% if is_student %}
-<a class="btn btn-primary mx-2 my-2" href="{% url 'cursos:process_subscribe' curso.id %}">Subscribe!</a>
+<a class="btn btn-primary mx-2 my-2" href="{% url 'cursos:process_subscribe' curso.id %}">Subscribe for 5.00$!</a>
+<form action="{% url 'cursos:charge' %}" method="post">
+  {% csrf_token %}
+  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="{{ key }}"
+          data-description="A Django Charge"
+          data-amount="500"
+          data-locale="auto"></script>
+</form>
 {% endif %}
 <h4>Subtitle:</h4>
 {{curso.subtitle}}

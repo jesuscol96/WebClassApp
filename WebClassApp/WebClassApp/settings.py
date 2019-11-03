@@ -129,3 +129,6 @@ STATICFILES_DIRS = ['', os.path.join(BASE_DIR, "static")
 ]
 
 LOGIN_URL = 'mainpage:login'
+
+STRIPE_SECRET_KEY = 'sk_test_DoKwRXhvuR0L0w80eCSPZbmB00YIWqDNbW'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_y2ELDy4r28kV9Pn6jUvkTPsF00UQX7ALZk'

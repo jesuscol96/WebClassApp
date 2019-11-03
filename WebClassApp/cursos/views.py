@@ -1,14 +1,17 @@
+import stripe 
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
+from django.conf import settings # new
 from django.urls import reverse
 from .models import Courses, CourseUser
 from categorias.models import Categories
 from mainpage.models import *
-# Create your views here.
+from django.shortcuts import redirect
 
+# Create your views here.
+stripe.api_key = "sk_test_DoKwRXhvuR0L0w80eCSPZbmB00YIWqDNbW"
 
 # Create your views here.
 def index(request):
@@ -114,7 +117,8 @@ def ver_curso(request,curso_id):
         'is_superuser' : is_superuser,
         'curso': curso,
         'is_student': is_student,
-        'is_instructor': is_instructor
+        'is_instructor': is_instructor,
+        'key' : settings.STRIPE_PUBLISHABLE_KEY
     }
 
     return render(request,'cursos/ver_curso.html',context)
@@ -219,6 +223,26 @@ def my_courses(request):
         'is_superuser' : is_superuser,
         'cursos': cursos,
         'is_student': is_student,
-        'is_instructor': is_instructor
+        'is_instructor': is_instructor,
     }
     return render(request,'cursos/my_courses.html',context)
+
+@login_required
+def charge(request): # new
+    if request.method == 'POST':
+        charge = stripe.Charge.create(
+            amount=500,
+            currency='usd',
+            description='A Django charge',
+            source=request.POST['stripeToken']
+            # transfer_group="{ORDER10}"
+        )
+        # transfer = stripe.Transfer.create(
+        #     amount=200,
+        #     currency="usd",
+        #     destination="{{CONNECTED_STRIPE_ACCOUNT_ID}}",
+        #     transfer_group="{ORDER10}",
+        # )
+        return render(request, 'cursos/charge.html')
+        # response = redirect('cursos:process_subscribe/course.id')
+        # return response

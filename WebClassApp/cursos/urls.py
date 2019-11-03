@@ -11,5 +11,5 @@ urlpatterns = [
     path('subscribe/<int:curso_id>', views.process_subscribe, name='process_subscribe'),
     path('subscriptions', views.ver_subscriptions, name='subscriptions'),
     path('my_courses', views.my_courses, name='my_courses'),
-
+    path('charge', views.charge, name='charge'), # new
 ]
