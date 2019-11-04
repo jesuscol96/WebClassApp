@@ -10,6 +10,7 @@ urlpatterns = [
     path('process_login', views.process_login, name='process_login'),
     path('register', views.register, name='register'),
     path('process_register', views.process_register, name='process_register'),
+    path('index_flutter', views.index_flutter, name='index_flutter'),
     
 
 ]
