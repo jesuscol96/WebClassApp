@@ -1,6 +1,6 @@
 # webclassapp
 
-WebClassApp client for android
+Web class app for android
 
 ## Getting Started
 
