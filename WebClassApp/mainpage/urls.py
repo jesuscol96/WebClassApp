@@ -11,6 +11,7 @@ urlpatterns = [
     path('register', views.register, name='register'),
     path('process_register', views.process_register, name='process_register'),
     path('index_flutter', views.index_flutter, name='index_flutter'),
+    path('process_login_flutter', views.process_login_flutter, name='process_login_flutter'),
     
 
 ]

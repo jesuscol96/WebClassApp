@@ -1,3 +1,5 @@
+import json
+from urllib.parse import parse_qs
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
@@ -109,7 +111,7 @@ def index_flutter(request):
             is_instructor = False
 
     else:
-        username = 'funciono nojoda, Luis no hagas el hamming'
+        username = 'none'
         is_superuser = False
         role = 'none'
         is_student = False
@@ -125,16 +127,18 @@ def index_flutter(request):
     }
     return JsonResponse(context)
 
-def login_view_flutter(request):
-    return render(request,'mainpage/login.html')
 
 def process_login_flutter(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request,user)
-    return HttpResponseRedirect(reverse('mainpage:index'))
+    if request.method=="POST": 
+        data=parse_qs(request.body.decode("utf-8"))               
+        username = data['username'][0]
+        password = data['password'][0]
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request,user) 
+            return JsonResponse({'is_login': True})
+        else:
+            return JsonResponse({'is_login': False})       
 
 def logout_view_flutter(request):
     logout(request)
