@@ -8,6 +8,9 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from .models import Roles, Users_details
 from django.http import JsonResponse
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+from .serializers import *
 
 # Create your views here.
 
@@ -129,48 +132,64 @@ def index_flutter(request):
 
 
 def process_login_flutter(request):
-    if request.method=="POST": 
-        data=parse_qs(request.body.decode("utf-8"))               
+    if request.method=="POST":
+        data=parse_qs(request.body.decode("utf-8"))
         username = data['username'][0]
         password = data['password'][0]
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request,user) 
+            login(request,user)
             return JsonResponse({'is_login': True})
         else:
-            return JsonResponse({'is_login': False})       
+            return JsonResponse({'is_login': False})
 
 def logout_view_flutter(request):
     logout(request)
-    return HttpResponseRedirect(reverse('mainpage:index'))
+    return JsonResponse({'is_logout': True})
 
-def register_flutter(request):
+def get_roles(request):
     roles = Roles.objects.all()
-    context = {'roles':roles,}
-    return render(request,'mainpage/register.html',context)
+    serializer = RolesSerializer(roles,many=True)
+    return JsonResponse(serializer.data,safe=False)
 
 def process_register_flutter(request):
-    username = request.POST['username']
-    email = request.POST['email']
-    firstname = request.POST['firstname']
-    lastname = request.POST['lastname']
-    password  = request.POST['password']
-    phone  = request.POST['phone']
-    gender  = request.POST['gender']
-    date_of_birth  = request.POST['date_of_birth']
-    role  = Roles.objects.get(id=request.POST['role'])
-    user = User.objects.create_user(username=username,
-                                    password=password,
-                                    email=email,
-                                    first_name=firstname,
-                                    last_name=lastname)
-    user.save()
-    details=Users_details(user_id = user,
-                  phone=phone,
-                  gender=gender,
-                  date_of_birth=date_of_birth,
-                  role_id=role,
-                  view_count=1)
-    details.save()
-    login(request,user)
-    return HttpResponseRedirect(reverse('mainpage:index'))
+    if request.method=="POST":
+        data=parse_qs(request.body.decode("utf-8"))
+        print(request.body)
+        username = data['username'][0]
+        password = data['password'][0]
+        email = data['email'][0]
+        firstname = data['firstname'][0]
+        lastname = data['lastname'][0]
+        phone  = data['phone'][0]
+        gender  = data['gender'][0]
+        date_of_birth  = data['date_of_birth'][0]
+        role  = Roles.objects.get(id=request.POST['role'])
+        user = User.objects.create_user(username=username,
+                                        password=password,
+                                        email=email,
+                                        first_name=firstname,
+                                        last_name=lastname)
+        user.save()
+        details=Users_details(user_id = user,
+                      phone=phone,
+                      gender=gender,
+                      date_of_birth=date_of_birth,
+                      role_id=role,
+                      view_count=1)
+        details.save()
+        login(request,user)
+        context = {
+                    'is_successful': True,
+        }
+        return JsonResponse(context,safe=False)
+
+def show_users(request,username):
+    if request.method == 'GET':
+        if username == 'all':
+            users = User.objects.all()
+        else:
+            users = User.objects.filter(username=username)
+        serializer = UserSerializer(users,many=True)
+        context = { 'users': serializer.data }
+        return JsonResponse(context,safe=False)
