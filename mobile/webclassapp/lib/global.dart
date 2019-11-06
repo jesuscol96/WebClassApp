@@ -14,7 +14,15 @@ class PostLogin {
   final bool is_student;
   final bool is_instructor;
 
-  PostLogin({this.is_user, this.username, this.is_superuser, this.role, this.is_student, this.is_instructor, this.password, this.is_login});
+  final String email;
+  final String firstname;
+  final String lastname;
+  final String phone;
+  final String gender;
+  final String date_of_birth;
+  final bool is_successful;
+
+  PostLogin({this.is_user, this.is_successful,this.username, this.is_superuser, this.role, this.is_student, this.is_instructor, this.password, this.is_login,this.email,this.firstname,this.lastname,this.gender,this.date_of_birth,this.phone});
 
   factory PostLogin.fromJson(Map<String, dynamic> json) {
     return PostLogin(
@@ -26,6 +34,13 @@ class PostLogin {
       role: json['role'],
       is_student: json['is_student'],
       is_instructor: json['is_instructor'],
+      email: json['email'],
+      firstname: json['firstname'],
+      lastname: json['lastname'],
+      phone: json['phone'],
+      gender: json['gender'],
+      date_of_birth: json['date_of_birth'],
+      is_successful: json['is_successful'],
     );
   }
 
@@ -34,6 +49,18 @@ class PostLogin {
     map["username"] = username;
     map["password"] = password;
     map['is_login'] = is_login;
+    map["is_user"] = is_user;
+    map["is_superuser"] = is_superuser;
+    map['role'] = role;
+    map["is_student"] = is_student;
+    map["is_instructor"] = is_instructor;
+    map['email'] = email;
+    map["firstname"] = firstname;
+    map["lastname"] = lastname;
+    map['phone'] = phone;
+    map["gender"] = gender;
+    map['date_of_birth'] = date_of_birth;
+    map['is_successful'] = is_successful;
 
     return map;
   }
