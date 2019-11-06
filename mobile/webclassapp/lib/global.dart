@@ -1,6 +1,5 @@
 library my_prj.globals;
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
