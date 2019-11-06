@@ -118,6 +118,7 @@ class MyApp extends StatelessWidget {
         '/Categorias': (context) => Categorias(),
         '/Cursos': (context) => Cursos(),
         '/Register': (context) => Register(),
+        '/Ip': (context) => IpPost(),
       },
     );
   }
@@ -125,7 +126,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   final String title;
-
+  var p;
   MyHomePage({Key key, this.title}) : super(key: key);
 
   @override
@@ -133,7 +134,7 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
       body:  new Center(
-          child: Index(),
+          child: (p = Index()),
       ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
@@ -215,7 +216,15 @@ class MyHomePage extends StatelessWidget {
               onTap: () {
                 globals.session = globals.Session();
                 Navigator.pop(context);
+                p.initState();
               }
+            ),
+            ListTile(
+                title: Text('IP Post'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/Ip');
+                }
             ),
           ],
         ),
@@ -334,18 +343,20 @@ class Index extends StatefulWidget{
 class _MyAppState extends State<Index> {
   Future<globals.PostLogin> post;
 
+  TextEditingController ipController = new TextEditingController();
+
   @override
   void initState() {
     super.initState();
     post = globals.session.fetchPost();
   }
 
-  void _refresh(){
+  void _refresh() {
     setState(() {
       post = globals.session.fetchPost();
     });
-
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -359,10 +370,21 @@ class _MyAppState extends State<Index> {
                     child: Column(
                             children: <Widget>[
                               Text('You are not logged in. Please Log in'),
+                              new TextField(
+                                controller: ipController,
+                                decoration: InputDecoration(
+                                    hintText: "IP....", labelText: 'Post IP'),
+                              ),
+                              RaisedButton(
+                                  onPressed: (){
+                                    globals.serverIp = ipController.text;
+                                  },
+                                  child: const Text('Set IP')
+                              ),
                               RaisedButton(
                                 onPressed: _refresh,
                                 child: const Text('Refresh'),
-                              )
+                              ),
                             ])
                     );
               else if(snapshot.hasData) {
@@ -370,6 +392,17 @@ class _MyAppState extends State<Index> {
                     child: Column(
                             children: <Widget>[
                               Text(snapshot.data.username),
+                              new TextField(
+                                controller: ipController,
+                                decoration: InputDecoration(
+                                    hintText: "IP....", labelText: 'Post IP'),
+                              ),
+                              RaisedButton(
+                                onPressed: (){
+                                  globals.serverIp = ipController.text;
+                                },
+                                child: const Text('Set IP')
+                              ),
                               RaisedButton(
                                  onPressed: _refresh,
                                  child: const Text('Refresh'),
@@ -377,7 +410,26 @@ class _MyAppState extends State<Index> {
                     )
                 );
               } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
+                return Center(
+                    child: Column(
+                        children: <Widget>[
+                          Text("${snapshot.error}"),
+                          new TextField(
+                            controller: ipController,
+                            decoration: InputDecoration(
+                                hintText: "IP....", labelText: 'Post IP'),
+                          ),
+                          RaisedButton(
+                              onPressed: (){
+                                globals.serverIp = ipController.text;
+                              },
+                              child: const Text('Set IP')
+                          ),
+                          RaisedButton(
+                            onPressed: _refresh,
+                            child: const Text('Refresh'),
+                          ),
+                        ]));
               }
               // By default, show a loading spinner.
               return CircularProgressIndicator();
@@ -485,6 +537,33 @@ class Register extends StatelessWidget {
               ],
             ),
           )),
+    );
+  }
+}
+
+class IpPost extends StatelessWidget {
+  TextEditingController IpController = new TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('IpPost'),
+      ),
+      body: Column(
+        children: <Widget>[
+          new TextField(
+            controller: IpController,
+            decoration: InputDecoration(
+            hintText: "IP...", labelText: 'Post Ip'),
+      ),
+          RaisedButton(
+            onPressed: (){
+              globals.serverIp = IpController.text;
+              Navigator.pop(context);
+            },
+            child: const Text('Set IP'),
+          ),]
+      ),
     );
   }
 }

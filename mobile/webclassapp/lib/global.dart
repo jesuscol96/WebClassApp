@@ -105,6 +105,6 @@ class Session {
   }
 }
 
+//String serverIp = '159.90.175.129';
 String serverIp = '192.168.1.4';
-var client = new http.Client();
 var session = Session();
