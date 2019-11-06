@@ -51,42 +51,81 @@ void _showDialogFalse(context) {
   );
 }
 
+// class PostLogin {
+//   final String username;
+//   final String password;
+//   final bool is_login;
+//   final bool is_user;
+//   final bool is_superuser;
+//   final String role;
+//   final bool is_student;
+//   final bool is_instructor;
 
-class PostLogin {
-  final String username;
-  final String password;
-  final bool is_login;
+//   PostLogin({this.is_user, this.username, this.is_superuser, this.role, this.is_student, this.is_instructor, this.password, this.is_login});
 
-  PostLogin({this.username, this.password, this.is_login});
+//   factory PostLogin.fromJson(Map<String, dynamic> json) {
+//     return PostLogin(
+//       username: json['username'],
+//       password: json['password'],
+//       is_login: json['is_login'],
+//       is_user: json['is_user'],
+//       is_superuser: json['is_superuser'],
+//       role: json['role'],
+//       is_student: json['is_student'],
+//       is_instructor: json['is_instructor'],
+//     );
+//   }
 
-  factory PostLogin.fromJson(Map<String, dynamic> json) {
-    return PostLogin(
-      username: json['username'],
-      password: json['password'],
-      is_login: json['is_login']
-    );
-  }
+//   Map toMap() {
+//     var map = new Map<String, dynamic>();
+//     map["username"] = username;
+//     map["password"] = password;
+//     map['is_login'] = is_login;
 
-  Map toMap() {
-    var map = new Map<String, dynamic>();
-    map["username"] = username;
-    map["password"] = password;
-    map['is_login'] = is_login;
+//     return map;
+//   }
+// }
 
-    return map;
-  }
-}
+// class Session {
+//   Map<String, String> headers = {};
 
-Future<PostLogin> createPost(String url, {Map body}) async {
-  return http.post(url, body: body).then((http.Response response) {
-    final int statusCode = response.statusCode;
+//   Future<PostLogin> fetchPost() async {
+//     final response = await http.get('http://' + globals.serverIp + '/index_flutter', headers: headers);
 
-    if (statusCode < 200 || statusCode > 400 || json == null) {
-      throw new Exception("Error while fetching data");
-    }
-    return PostLogin.fromJson(json.decode(response.body));
-  });
-}
+//     if (response.statusCode == 200) {
+//       // If server returns an OK response, parse the JSON.
+//       var map =PostLogin.fromJson(json.decode(response.body));
+//       print(map.username);
+//       updateCookie(response);
+//       return PostLogin.fromJson(json.decode(response.body));
+//     } else {
+//       // If that response was not OK, throw an error.
+//       throw Exception('Failed to load post');
+//      }
+//    }
+
+//   Future<PostLogin> createPost(String url, {Map body}) async {
+//   return globals.client.post(url, body: body,headers: headers).then((http.Response response) {
+//     final int statusCode = response.statusCode;
+
+//     if (statusCode < 200 || statusCode > 400 || json == null) {
+//       throw new Exception("Error while fetching data");
+//     }
+//     updateCookie(response);
+//     return PostLogin.fromJson(json.decode(response.body));
+//   });
+// }
+
+//   void updateCookie(http.Response response) {
+//     String rawCookie = response.headers['set-cookie'];
+//     if (rawCookie != null) {
+//       int index = rawCookie.indexOf(';');
+//       headers['cookie'] =
+//           (index == -1) ? rawCookie : rawCookie.substring(0, index);
+//       }
+//     }
+//   }
+
 
 
 void main() => runApp(MyApp());
@@ -116,6 +155,7 @@ class MyApp extends StatelessWidget {
         '/Login': (context) => Login(),
         '/Categorias': (context) => Categorias(),
         '/Cursos': (context) => Cursos(),
+        '/Index2': (context) =>  Index2()
       },
     );
   }
@@ -131,7 +171,7 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
       body:  new Center(
-          child: Text(globals.serverIp)
+          child: Index(),
       ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
@@ -201,6 +241,13 @@ class MyHomePage extends StatelessWidget {
                 Navigator.pushNamed(context, '/Login');
               },
             ),
+            ListTile(
+              title: Text('Index2'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/Index2');
+              }
+            ),
           ],
         ),
       ),
@@ -249,7 +296,7 @@ class Cursos extends StatelessWidget {
 }
 
 class Login extends StatelessWidget {
-  final Future<PostLogin> post;
+  final Future<globals.PostLogin> post;
 
   Login({Key key, this.post}) : super(key: key);
   static final CREATE_POST_URL = 'http://' + globals.serverIp + '/process_login_flutter';
@@ -285,9 +332,9 @@ class Login extends StatelessWidget {
                 ),
                 new RaisedButton(
                   onPressed: () async {
-                    PostLogin newPost = new PostLogin(
+                    globals.PostLogin newPost = new globals.PostLogin(
                         username: usernameController.text, password: passwordController.text);
-                    PostLogin p = await createPost(CREATE_POST_URL,
+                    globals.PostLogin p = await globals.session.createPost(CREATE_POST_URL,
                         body: {'username': usernameController.text,'password': passwordController.text});
                     print(p.is_login);
                     if (p.is_login == false){
@@ -303,6 +350,143 @@ class Login extends StatelessWidget {
               ],
             ),
           )),
+    );
+  }
+}
+
+class Index extends StatefulWidget{
+  Index({Key key, this.title}) : super(key: key);
+
+  // This widget is the home page of your application. It is stateful, meaning
+  // that it has a State object (defined below) that contains fields that affect
+  // how it looks.
+
+  // This class is the configuration for the state. It holds the values (in this
+  // case the title) provided by the parent (in this case the App widget) and
+  // used by the build method of the State. Fields in a Widget subclass are
+  // always marked "final".
+
+  final String title;
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<Index> {
+  Future<globals.PostLogin> post;
+
+  @override
+  void initState() {
+    super.initState();
+    post = globals.session.fetchPost();
+  }
+
+  void _refresh(){
+    setState(() {
+      post = globals.session.fetchPost();
+    });
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+          child: FutureBuilder<globals.PostLogin>(
+            future: post,
+            builder: (context, snapshot) {
+              if (snapshot.hasData && (snapshot.data.username == 'none'))
+                return Center(
+                    child: Column(
+                            children: <Widget>[
+                              Text('You are not logged in. Please Log in'),
+                              RaisedButton(
+                                onPressed: _refresh,
+                                child: const Text('Refresh'),
+                              )
+                            ])
+                    );
+              else if(snapshot.hasData) {
+                return Text(snapshot.data.username);
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
+              // By default, show a loading spinner.
+              return CircularProgressIndicator();
+            },
+          ),
+        ),
+      );
+  }
+}
+
+class Index2 extends StatefulWidget{
+  Index2({Key key, this.title}) : super(key: key);
+
+  // This widget is the home page of your application. It is stateful, meaning
+  // that it has a State object (defined below) that contains fields that affect
+  // how it looks.
+
+  // This class is the configuration for the state. It holds the values (in this
+  // case the title) provided by the parent (in this case the App widget) and
+  // used by the build method of the State. Fields in a Widget subclass are
+  // always marked "final".
+
+  final String title;
+
+  @override
+  _MyAppState2 createState() => _MyAppState2();
+}
+
+class _MyAppState2 extends State<Index2> {
+  Future<globals.PostLogin> post;
+
+  @override
+  void initState() {
+    super.initState();
+    globals.client.post('http://' + globals.serverIp + '/process_login_flutter',body: {'username':'rootc', 'password':'1234'});
+    post = globals.session.fetchPost();
+  }
+
+  void _refresh(){
+    setState(() {
+      post = globals.session.fetchPost();
+    });
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Index'),
+      ),
+      body: Center(
+        child: FutureBuilder<globals.PostLogin>(
+          future: post,
+          builder: (context, snapshot) {
+            if (snapshot.hasData && (snapshot.data.username == 'none'))
+              return Center(
+                  child: Column(
+                      children: <Widget>[
+                        Text('You are not logged in. Please Log in'),
+                        RaisedButton(
+                          onPressed: _refresh,
+                          child: const Text('Refresh'),
+                        ),
+                        Text(snapshot.data.username),
+                      ])
+              );
+            else if(snapshot.hasData) {
+              return Text(snapshot.data.username);
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
+            // By default, show a loading spinner.
+            return CircularProgressIndicator();
+          },
+        ),
+      ),
     );
   }
 }
