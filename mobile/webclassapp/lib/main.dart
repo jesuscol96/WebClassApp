@@ -4,6 +4,54 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+void _showDialog(context) {
+  // flutter defined function
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      // return object of type Dialog
+      return AlertDialog(
+        title: new Text("Login Success!"),
+        content: new Text("Enjoy WebClassApp!"),
+        actions: <Widget>[
+          // usually buttons at the bottom of the dialog
+          new FlatButton(
+            child: new Text("Close"),
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+void _showDialogFalse(context) {
+  // flutter defined function
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      // return object of type Dialog
+      return AlertDialog(
+        title: new Text("Login Failed"),
+        content: new Text("Username and password are not recognizable. Register!"),
+        actions: <Widget>[
+          // usually buttons at the bottom of the dialog
+          new FlatButton(
+            child: new Text("Try again"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+
 class PostLogin {
   final String username;
   final String password;
@@ -242,8 +290,15 @@ class Login extends StatelessWidget {
                     PostLogin p = await createPost(CREATE_POST_URL,
                         body: {'username': usernameController.text,'password': passwordController.text});
                     print(p.is_login);
+                    if (p.is_login == false){
+                        _showDialogFalse(context);
+                    }
+                    else{
+                      _showDialog(context);
+                      //Navigator.pop(context);
+                    }
                   },
-                  child: const Text("Create"),
+                  child: const Text("Login"),
                 )
               ],
             ),
