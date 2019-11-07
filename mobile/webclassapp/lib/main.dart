@@ -233,22 +233,95 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class Categorias extends StatelessWidget {
+class Categorias extends StatefulWidget{
+  Categorias({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _CategoriasState createState() => _CategoriasState();
+}
+
+class _CategoriasState extends State<Categorias> {
+  Future<globals.PostLogin> post;
+
+  @override
+  void initState() {
+    super.initState();
+    post = globals.session.fetchPost('/categorias/index_flutter');
+  }
+
+  void _refresh() {
+    setState(() {
+      post = globals.session.fetchPost('/categorias/index_flutter');
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Categorias'),
-      ),
-      body: Center(
-        child: RaisedButton(
-          child: Text('Category Description'),
-          onPressed: () {
-            // Navigate to the second screen using a named route.
-            Navigator.pushNamed(context, '/CategoriasDescription');
+    return MaterialApp(
+        title: 'Categorías',
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+        ),
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text('Categorías'),
+          ),
+        body: Center(
+        child: FutureBuilder<globals.PostLogin>(
+          future: post,
+          builder: (context, snapshot) {
+            if (snapshot.hasData && (snapshot.data.username == 'none'))
+              return Center(
+                  child: Column(
+                      children: <Widget>[
+                        Text('You are not logged in. Please Log in'),
+                        RaisedButton(
+                          onPressed: _refresh,
+                          child: const Text('Refresh'),
+                        ),
+                      ])
+              );
+            else if(snapshot.hasData) {
+              return ListView(
+                  children: <Widget>[
+                        Text('Categorías'),
+                        RaisedButton(
+                          onPressed: null,
+                          child: Text('Crear Categoría'),
+                        ),
+                        for (var category in snapshot.data.categorias) Column(
+                          children: <Widget>[
+                            Text(category['name']),
+                            Text(category['description']),
+                            Text('Next Category')
+                          ],
+                          ),
+                        //Text(snapshot.data.cursos[0]['title']),
+                        RaisedButton(
+                          onPressed: _refresh,
+                          child: const Text('Refresh'),
+                        )]
+                  );
+            } else if (snapshot.hasError) {
+              return Center(
+                  child: Column(
+                      children: <Widget>[
+                        Text("${snapshot.error}"),
+                        RaisedButton(
+                          onPressed: _refresh,
+                          child: const Text('Refresh'),
+                        ),
+                      ]));
+            }
+            // By default, show a loading spinner.
+            return CircularProgressIndicator();
           },
         ),
       ),
+    ),
     );
   }
 }

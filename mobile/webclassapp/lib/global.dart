@@ -46,7 +46,11 @@ class PostLogin {
   final String created_at;
   final String updated_at;
 
-  PostLogin({this.is_user, this.cursos, this.id, this.user_id, this.category_id, this.title, this.sub_title, this.description, this.about_instructor, this.playlist_url, this.tags, this.photo, this.promo_video_url, this.creator_status, this.admin_status, this.what_will_students_learn, this.target_students, this.requirements, this.discount_price, this.actual_price, this.view_count, this.subscriber_count, this.deleted_at, this.created_at, this.updated_at, this.is_successful,this.username, this.is_superuser, this.role, this.is_student, this.is_instructor, this.password, this.is_login,this.email,this.firstname,this.lastname,this.gender,this.date_of_birth,this.phone});
+  final int pk;
+  final String name;
+  final List categorias;
+
+  PostLogin({this.is_user, this.pk, this.name, this.categorias, this.cursos, this.id, this.user_id, this.category_id, this.title, this.sub_title, this.description, this.about_instructor, this.playlist_url, this.tags, this.photo, this.promo_video_url, this.creator_status, this.admin_status, this.what_will_students_learn, this.target_students, this.requirements, this.discount_price, this.actual_price, this.view_count, this.subscriber_count, this.deleted_at, this.created_at, this.updated_at, this.is_successful,this.username, this.is_superuser, this.role, this.is_student, this.is_instructor, this.password, this.is_login,this.email,this.firstname,this.lastname,this.gender,this.date_of_birth,this.phone});
 
   factory PostLogin.fromJson(Map<String, dynamic> json) {
     return PostLogin(
@@ -88,6 +92,9 @@ class PostLogin {
       deleted_at: json['deleted_at'],
       created_at: json['created_at'],
       updated_at: json['updated_at'],
+      pk: json['pk'],
+      name: json['name'],
+      categorias: json['categorias'],
     );
   }
 
@@ -133,6 +140,10 @@ class PostLogin {
     map["deleted_at"] = deleted_at;
     map['created_at'] = created_at;
     map['updated_at'] = updated_at;
+
+    map["pk"] = pk;
+    map['name'] = name;
+    map['categorias'] = categorias;
 
     return map;
   }
