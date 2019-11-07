@@ -113,13 +113,14 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => MyHomePage(title: 'Example',),
+        '/': (context) => MyHomePage(title: 'WebClassApp',),
         '/Login': (context) => Login(),
         '/Categorias': (context) => Categorias(),
         '/Cursos': (context) => Cursos(),
         '/Register': (context) => Register(),
         '/Ip': (context) => IpPost(),
         '/Suscripciones': (context) => Subscriptions(),
+        '/MisCursos': (context) => MyCourses(),
       },
     );
   }
@@ -188,6 +189,7 @@ class MyHomePage extends StatelessWidget {
                 // ...
                 // Then close the drawer
                 Navigator.pop(context);
+                Navigator.pushNamed(context, '/MisCursos');
               },
             ),
             ListTile(
@@ -485,6 +487,99 @@ class _SubscriptionsState extends State<Subscriptions> {
                             Text(suscripcion['course_id'].toString()),
                             Text(suscripcion['user_id'].toString()),
                             Text('Next Suscription')
+                          ],
+                          ),
+                        //Text(snapshot.data.cursos[0]['title']),
+                        RaisedButton(
+                          onPressed: _refresh,
+                          child: const Text('Refresh'),
+                        )]
+                  );
+            } else if (snapshot.hasError) {
+              return Center(
+                  child: Column(
+                      children: <Widget>[
+                        Text("${snapshot.error}"),
+                        RaisedButton(
+                          onPressed: _refresh,
+                          child: const Text('Refresh'),
+                        ),
+                      ]));
+            }
+            // By default, show a loading spinner.
+            return CircularProgressIndicator();
+          },
+        ),
+      ),
+    ),
+    );
+  }
+}
+
+class MyCourses extends StatefulWidget{
+  MyCourses({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _MyCoursesState createState() => _MyCoursesState();
+}
+
+class _MyCoursesState extends State<MyCourses> {
+  Future<globals.PostLogin> post;
+
+  @override
+  void initState() {
+    super.initState();
+    post = globals.session.fetchPost('/cursos/my_courses_flutter');
+  }
+
+  void _refresh() {
+    setState(() {
+      post = globals.session.fetchPost('/cursos/my_courses_flutter');
+    });
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Mis Cursos',
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+        ),
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text('Mis Cursos'),
+          ),
+        body: Center(
+        child: FutureBuilder<globals.PostLogin>(
+          future: post,
+          builder: (context, snapshot) {
+            if (snapshot.hasData && (snapshot.data.username == 'none'))
+              return Center(
+                  child: Column(
+                      children: <Widget>[
+                        Text('You are not logged in. Please Log in'),
+                        RaisedButton(
+                          onPressed: _refresh,
+                          child: const Text('Refresh'),
+                        ),
+                      ])
+              );
+            else if(snapshot.hasData) {
+              return ListView(
+                  children: <Widget>[
+                        Text('Mis Cursos'),
+                        RaisedButton(
+                          onPressed: null,
+                          child: Text('Crear Cursos'),
+                        ),
+                        for (var curso in snapshot.data.cursos) Column(
+                          children: <Widget>[
+                            Text(curso['title']),
+                            Text(curso['description']),
+                            Text('Next Course')
                           ],
                           ),
                         //Text(snapshot.data.cursos[0]['title']),
