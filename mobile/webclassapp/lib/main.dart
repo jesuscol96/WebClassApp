@@ -253,22 +253,95 @@ class Categorias extends StatelessWidget {
   }
 }
 
-class Cursos extends StatelessWidget {
+class Cursos extends StatefulWidget{
+  Cursos({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _CursosState createState() => _CursosState();
+}
+
+class _CursosState extends State<Cursos> {
+  Future<globals.PostLogin> post;
+
+  @override
+  void initState() {
+    super.initState();
+    post = globals.session.fetchPost('/cursos/index_flutter');
+  }
+
+  void _refresh() {
+    setState(() {
+      post = globals.session.fetchPost('/cursos/index_flutter');
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Cursos'),
-      ),
-      body: Center(
-        child: RaisedButton(
-          child: Text('Course Description'),
-          onPressed: () {
-            // Navigate to the second screen using a named route.
-            Navigator.pushNamed(context, '/CursosDescription');
+    return MaterialApp(
+        title: 'Cursos',
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+        ),
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text('Cursos'),
+          ),
+        body: Center(
+        child: FutureBuilder<globals.PostLogin>(
+          future: post,
+          builder: (context, snapshot) {
+            if (snapshot.hasData && (snapshot.data.username == 'none'))
+              return Center(
+                  child: Column(
+                      children: <Widget>[
+                        Text('You are not logged in. Please Log in'),
+                        RaisedButton(
+                          onPressed: _refresh,
+                          child: const Text('Refresh'),
+                        ),
+                      ])
+              );
+            else if(snapshot.hasData) {
+              return ListView(
+                  children: <Widget>[
+                        Text('Cursos'),
+                        RaisedButton(
+                          onPressed: null,
+                          child: Text('Crear Curso'),
+                        ),
+                        for (var curso in snapshot.data.cursos) Column(
+                          children: <Widget>[
+                            Text(curso['title']),
+                            Text(curso['description']),
+                            Text('Next Course')
+                          ],
+                          ),
+                        //Text(snapshot.data.cursos[0]['title']),
+                        RaisedButton(
+                          onPressed: _refresh,
+                          child: const Text('Refresh'),
+                        )]
+                  );
+            } else if (snapshot.hasError) {
+              return Center(
+                  child: Column(
+                      children: <Widget>[
+                        Text("${snapshot.error}"),
+                        RaisedButton(
+                          onPressed: _refresh,
+                          child: const Text('Refresh'),
+                        ),
+                      ]));
+            }
+            // By default, show a loading spinner.
+            return CircularProgressIndicator();
           },
         ),
       ),
+    ),
     );
   }
 }
@@ -348,12 +421,12 @@ class _MyAppState extends State<Index> {
   @override
   void initState() {
     super.initState();
-    post = globals.session.fetchPost();
+    post = globals.session.fetchPost('/index_flutter');
   }
 
   void _refresh() {
     setState(() {
-      post = globals.session.fetchPost();
+      post = globals.session.fetchPost('/index_flutter');
     });
   }
 
