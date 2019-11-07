@@ -50,7 +50,18 @@ class PostLogin {
   final String name;
   final List categorias;
 
-  PostLogin({this.is_user, this.pk, this.name, this.categorias, this.cursos, this.id, this.user_id, this.category_id, this.title, this.sub_title, this.description, this.about_instructor, this.playlist_url, this.tags, this.photo, this.promo_video_url, this.creator_status, this.admin_status, this.what_will_students_learn, this.target_students, this.requirements, this.discount_price, this.actual_price, this.view_count, this.subscriber_count, this.deleted_at, this.created_at, this.updated_at, this.is_successful,this.username, this.is_superuser, this.role, this.is_student, this.is_instructor, this.password, this.is_login,this.email,this.firstname,this.lastname,this.gender,this.date_of_birth,this.phone});
+  final int course_id;
+  final String msg;
+  final bool is_subs;
+  final String paid_date;
+  final String expiry_date;
+  final String plan;
+  final String paid_amount;
+  final int status;
+
+  final bool is_cursos;
+
+  PostLogin({this.is_user, this.is_cursos, this.expiry_date, this.plan, this.paid_amount, this.status, this.course_id, this.msg, this.is_subs, this.paid_date, this.pk, this.name, this.categorias, this.cursos, this.id, this.user_id, this.category_id, this.title, this.sub_title, this.description, this.about_instructor, this.playlist_url, this.tags, this.photo, this.promo_video_url, this.creator_status, this.admin_status, this.what_will_students_learn, this.target_students, this.requirements, this.discount_price, this.actual_price, this.view_count, this.subscriber_count, this.deleted_at, this.created_at, this.updated_at, this.is_successful,this.username, this.is_superuser, this.role, this.is_student, this.is_instructor, this.password, this.is_login,this.email,this.firstname,this.lastname,this.gender,this.date_of_birth,this.phone});
 
   factory PostLogin.fromJson(Map<String, dynamic> json) {
     return PostLogin(
@@ -95,6 +106,18 @@ class PostLogin {
       pk: json['pk'],
       name: json['name'],
       categorias: json['categorias'],
+
+      msg: json['msg'],
+      is_subs: json['is_subs'],
+      paid_amount: json['paid_amount'],
+      paid_date: json['paid_date'],
+      plan: json['plan'],
+      status: json['status'],
+      expiry_date: json['expiry_date'],
+      course_id: json['course_id'],
+
+      is_cursos: json['is_cursos'],
+
     );
   }
 
@@ -144,6 +167,17 @@ class PostLogin {
     map["pk"] = pk;
     map['name'] = name;
     map['categorias'] = categorias;
+
+    map["paid_amount"] =paid_amount;
+    map['msg'] = msg;
+    map['paid_date'] = paid_date;
+    map["expiry_date"] =expiry_date;
+    map['is_subs'] = is_subs;
+    map['status'] = status;
+    map["course_id"] = course_id;
+    map['plan'] = plan;
+
+    map['is_cursos'] = is_cursos;
 
     return map;
   }

@@ -119,6 +119,7 @@ class MyApp extends StatelessWidget {
         '/Cursos': (context) => Cursos(),
         '/Register': (context) => Register(),
         '/Ip': (context) => IpPost(),
+        '/Suscripciones': (context) => Subscriptions(),
       },
     );
   }
@@ -177,6 +178,7 @@ class MyHomePage extends StatelessWidget {
                 // ...
                 // Then close the drawer
                 Navigator.pop(context);
+                Navigator.pushNamed(context, '/Suscripciones');
               },
             ),
             ListTile(
@@ -390,6 +392,99 @@ class _CursosState extends State<Cursos> {
                             Text(curso['title']),
                             Text(curso['description']),
                             Text('Next Course')
+                          ],
+                          ),
+                        //Text(snapshot.data.cursos[0]['title']),
+                        RaisedButton(
+                          onPressed: _refresh,
+                          child: const Text('Refresh'),
+                        )]
+                  );
+            } else if (snapshot.hasError) {
+              return Center(
+                  child: Column(
+                      children: <Widget>[
+                        Text("${snapshot.error}"),
+                        RaisedButton(
+                          onPressed: _refresh,
+                          child: const Text('Refresh'),
+                        ),
+                      ]));
+            }
+            // By default, show a loading spinner.
+            return CircularProgressIndicator();
+          },
+        ),
+      ),
+    ),
+    );
+  }
+}
+
+class Subscriptions extends StatefulWidget{
+  Subscriptions({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _SubscriptionsState createState() => _SubscriptionsState();
+}
+
+class _SubscriptionsState extends State<Subscriptions> {
+  Future<globals.PostLogin> post;
+
+  @override
+  void initState() {
+    super.initState();
+    post = globals.session.fetchPost('/cursos/ver_subscriptions_flutter');
+  }
+
+  void _refresh() {
+    setState(() {
+      post = globals.session.fetchPost('/cursos/ver_subscriptions_flutter');
+    });
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Subcripciones',
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+        ),
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text('Subscripciones'),
+          ),
+        body: Center(
+        child: FutureBuilder<globals.PostLogin>(
+          future: post,
+          builder: (context, snapshot) {
+            if (snapshot.hasData && (snapshot.data.username == 'none'))
+              return Center(
+                  child: Column(
+                      children: <Widget>[
+                        Text('You are not logged in. Please Log in'),
+                        RaisedButton(
+                          onPressed: _refresh,
+                          child: const Text('Refresh'),
+                        ),
+                      ])
+              );
+            else if(snapshot.hasData) {
+              return ListView(
+                  children: <Widget>[
+                        Text('Suscripciones'),
+                        RaisedButton(
+                          onPressed: null,
+                          child: Text('Crear Suscripciones'),
+                        ),
+                        for (var suscripcion in snapshot.data.cursos) Column(
+                          children: <Widget>[
+                            Text(suscripcion['course_id'].toString()),
+                            Text(suscripcion['user_id'].toString()),
+                            Text('Next Suscription')
                           ],
                           ),
                         //Text(snapshot.data.cursos[0]['title']),
