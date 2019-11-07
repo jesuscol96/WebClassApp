@@ -133,9 +133,8 @@ def index_flutter(request):
 
 def process_login_flutter(request):
     if request.method=="POST":
-        data=parse_qs(request.body.decode("utf-8"))
-        username = data['username'][0]
-        password = data['password'][0]
+        username = request.POST['username']
+        password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request,user)
@@ -155,7 +154,6 @@ def get_roles(request):
 def process_register_flutter(request):
     if request.method=="POST":
         data=parse_qs(request.body.decode("utf-8"))
-        print(request.body)
         username = data['username'][0]
         password = data['password'][0]
         email = data['email'][0]
