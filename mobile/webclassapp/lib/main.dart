@@ -537,15 +537,22 @@ class _SubscriptionsState extends State<Subscriptions> {
               return ListView(
                   children: <Widget>[
                         Text('Suscripciones'),
-                        RaisedButton(
-                          onPressed: null,
-                          child: Text('Crear Suscripciones'),
-                        ),
+                        // RaisedButton(
+                        //   onPressed: null,
+                        //   child: Text('Crear Suscripciones'),
+                        // ),
                         for (var suscripcion in snapshot.data.cursos) Column(
                           children: <Widget>[
-                            Text(suscripcion['course_id'].toString()),
-                            Text(suscripcion['user_id'].toString()),
-                            Text('Next Suscription')
+                            Text(suscripcion['course_id']['title']),
+                            Text(suscripcion['course_id']['description']),
+                            RaisedButton(
+                              onPressed:() {
+                              globals.curso = suscripcion['course_id'];
+                              print(globals.curso);
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => VerCurso()),);
+                              },
+                              child: Text('Read More'),
+                            )
                           ],
                           ),
                         //Text(snapshot.data.cursos[0]['title']),
@@ -630,15 +637,21 @@ class _MyCoursesState extends State<MyCourses> {
               return ListView(
                   children: <Widget>[
                         Text('Mis Cursos'),
-                        RaisedButton(
-                          onPressed: null,
-                          child: Text('Crear Cursos'),
-                        ),
+//                        RaisedButton(
+//                          onPressed: null,
+//                          child: Text('Crear Cursos'),
+//                        ),
                         for (var curso in snapshot.data.cursos) Column(
                           children: <Widget>[
                             Text(curso['title']),
                             Text(curso['description']),
-                            Text('Next Course')
+                            RaisedButton(
+                              onPressed:() {
+                                globals.curso = curso;
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => VerCurso()),);
+                              },
+                              child: Text('Read More'),
+                            ),
                           ],
                           ),
                         //Text(snapshot.data.cursos[0]['title']),
