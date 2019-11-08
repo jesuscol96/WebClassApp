@@ -393,7 +393,9 @@ def ver_subscriptions_flutter(request):
         cursos=[]
         for curso in cursos_user:
             cursos.append(curso.course_id)
+    cursos = CoursesSerializer(cursos,many=True)
     cursos_user  = CourseUserSerializer(cursos_user,many=True)
+
 
     context={
         'msg': msg,
@@ -401,7 +403,8 @@ def ver_subscriptions_flutter(request):
         'is_user': request.user.is_authenticated,
         'username': username,
         'is_superuser' : is_superuser,
-        'cursos': cursos_user.data,
+        'cursos': cursos.data,
+        'cursos_details': cursos_user.data,
         'is_student': is_student,
         'is_instructor': is_instructor
     }
