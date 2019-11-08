@@ -115,6 +115,16 @@ void _showDialogCategory(context, Map category) {
         actions: <Widget>[
           // usually buttons at the bottom of the dialog
           FlatButton(
+            onPressed: () async{
+              globals.PostLogin p = await globals.session.createPost('http://' + globals.serverIp + '/categorias/delete_category_flutter',
+                        body: {'pk': category['pk'].toString()} );
+              Navigator.of(context).pop();
+              if (p.success)
+                print('Delete was successful');
+            },
+            child: Text('Delete'),
+            ),
+          FlatButton(
             onPressed:null,
             child: Text('Suscribe'),
             ),

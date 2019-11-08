@@ -61,7 +61,9 @@ class PostLogin {
 
   final bool is_cursos;
 
-  PostLogin({this.is_user, this.is_cursos, this.expiry_date, this.plan, this.paid_amount, this.status, this.course_id, this.msg, this.is_subs, this.paid_date, this.pk, this.name, this.categorias, this.cursos, this.id, this.user_id, this.category_id, this.title, this.sub_title, this.description, this.about_instructor, this.playlist_url, this.tags, this.photo, this.promo_video_url, this.creator_status, this.admin_status, this.what_will_students_learn, this.target_students, this.requirements, this.discount_price, this.actual_price, this.view_count, this.subscriber_count, this.deleted_at, this.created_at, this.updated_at, this.is_successful,this.username, this.is_superuser, this.role, this.is_student, this.is_instructor, this.password, this.is_login,this.email,this.firstname,this.lastname,this.gender,this.date_of_birth,this.phone});
+  final bool success;
+
+  PostLogin({this.is_user, this.success, this.is_cursos, this.expiry_date, this.plan, this.paid_amount, this.status, this.course_id, this.msg, this.is_subs, this.paid_date, this.pk, this.name, this.categorias, this.cursos, this.id, this.user_id, this.category_id, this.title, this.sub_title, this.description, this.about_instructor, this.playlist_url, this.tags, this.photo, this.promo_video_url, this.creator_status, this.admin_status, this.what_will_students_learn, this.target_students, this.requirements, this.discount_price, this.actual_price, this.view_count, this.subscriber_count, this.deleted_at, this.created_at, this.updated_at, this.is_successful,this.username, this.is_superuser, this.role, this.is_student, this.is_instructor, this.password, this.is_login,this.email,this.firstname,this.lastname,this.gender,this.date_of_birth,this.phone});
 
   factory PostLogin.fromJson(Map<String, dynamic> json) {
     return PostLogin(
@@ -117,6 +119,8 @@ class PostLogin {
       course_id: json['course_id'],
 
       is_cursos: json['is_cursos'],
+
+      success: json['success'],
 
     );
   }
@@ -178,6 +182,8 @@ class PostLogin {
     map['plan'] = plan;
 
     map['is_cursos'] = is_cursos;
+
+    map['success'] = success;
 
     return map;
   }
