@@ -387,13 +387,9 @@ def ver_subscriptions_flutter(request):
     cursos_user = CourseUser.objects.filter(user_id=user.id)
     if len(cursos_user)==0:
         msg="No subscriptions"
-        cursos='none'
         is_subs = False
-    else:
-        cursos=[]
-        for curso in cursos_user:
-            cursos.append(curso.course_id)
     cursos_user  = CourseUserSerializer(cursos_user,many=True)
+
 
     context={
         'msg': msg,
