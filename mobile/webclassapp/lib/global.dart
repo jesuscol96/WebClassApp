@@ -57,7 +57,7 @@ class PostLogin {
   final String expiry_date;
   final String plan;
   final String paid_amount;
-  final int status;
+  final String status;
 
   final bool is_cursos;
 
@@ -229,6 +229,7 @@ class Session {
   }
 }
 
+Map curso;
 //String serverIp = '159.90.175.129';
 String serverIp = '192.168.1.4';
 var session = Session();

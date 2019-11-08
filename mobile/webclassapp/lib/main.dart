@@ -437,14 +437,22 @@ class _CursosState extends State<Cursos> {
                   children: <Widget>[
                         Text('Cursos'),
                         RaisedButton(
-                          onPressed: null,
+                          onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => CrearCurso()),);
+                          },
                           child: Text('Crear Curso'),
                         ),
                         for (var curso in snapshot.data.cursos) Column(
                           children: <Widget>[
                             Text(curso['title']),
                             Text(curso['description']),
-                            Text('Next Course')
+                            RaisedButton(
+                              onPressed:() {
+                                globals.curso = curso;
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => VerCurso()),);
+                              },
+                              child: Text('Read More'),
+                            )
                           ],
                           ),
                         //Text(snapshot.data.cursos[0]['title']),
@@ -1003,6 +1011,151 @@ class IpPost extends StatelessWidget {
             child: const Text('Set IP'),
           ),]
       ),
+    );
+  }
+}
+
+class VerCurso extends StatelessWidget{
+
+  // VerCurso({Key key, this.curso}) : super(key: key);
+  // final Map curso;
+  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Descripción del curso'),
+      ),
+      body: ListView(
+        children: <Widget>[
+          Text(globals.curso['title']),
+          RaisedButton(
+            onPressed: () async{
+              globals.PostLogin p = await globals.session.createPost('http://' + globals.serverIp + '/cursos/process_subscribe_flutter',
+                  body: {'pk': globals.curso['id'].toString()} );
+              Navigator.of(context).pop();
+              if (p.success)
+                print('Suscribe was successful');
+            },
+            child: Text('Suscribe'),
+            ),
+          //Text(globals.curso['subtitle']),
+          Text(globals.curso['about_instructor']),
+          Text(globals.curso['playlist_url']),
+          Text(globals.curso['what_will_students_learn']),
+          Text(globals.curso['target_students']),
+          Text(globals.curso['requirements']),
+          Text(globals.curso['discount_price'].toString()),
+          Text(globals.curso['actual_price'].toString()),
+        ],
+      ),
+    );
+  }
+}
+
+class CrearCurso extends StatelessWidget {
+  final Future<globals.PostLogin> post;
+
+  CrearCurso({Key key, this.post}) : super(key: key);
+  static final CREATE_POST_URL = 'http://' + globals.serverIp + '/cursos/process_new_curso_flutter';
+  TextEditingController titleController = new TextEditingController();
+  TextEditingController subtitleController = new TextEditingController();
+  TextEditingController descriptionController = new TextEditingController();
+  TextEditingController categoria_idController = new TextEditingController();
+  TextEditingController about_instructorController = new TextEditingController();
+  TextEditingController playlist_urlController = new TextEditingController();
+  TextEditingController what_will_students_learnController = new TextEditingController();
+  TextEditingController target_studentsController = new TextEditingController();
+  TextEditingController requirementsController = new TextEditingController();
+  TextEditingController discount_priceController = new TextEditingController();
+  TextEditingController actual_priceController = new TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+
+    return MaterialApp(
+      title: "Crear Curso",
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+        brightness: Brightness.light,
+      ),
+      home: Scaffold(
+          appBar: AppBar(
+            title: Text('Crear Curso'),
+          ),
+          body: new Container(
+            margin: const EdgeInsets.only(left: 8.0, right: 8.0),
+            child: new ListView(
+              children: <Widget>[
+                new TextField(
+                  controller: titleController,
+                  decoration: InputDecoration(
+                      hintText: "Title....", labelText: 'Post Title'),
+                ),
+                new TextField(
+                  controller: subtitleController,
+                  decoration: InputDecoration(
+                      hintText: "Subtitle....", labelText: 'Post Subtitle'),
+                ),
+                new TextField(
+                  controller: descriptionController,
+                  decoration: InputDecoration(
+                      hintText: "Description....", labelText: 'Post Description'),
+                ),
+                new TextField(
+                  controller: categoria_idController,
+                  decoration: InputDecoration(
+                      hintText: "Category id....", labelText: 'Post Category id'),
+                ),
+                new TextField(
+                  controller: about_instructorController,
+                  decoration: InputDecoration(
+                      hintText: "About Instructor....", labelText: 'Post About Instructor'),
+                ),
+                new TextField(
+                  controller: playlist_urlController,
+                  decoration: InputDecoration(
+                      hintText: "Playlist URL....", labelText: 'Post Playlist URL'),
+                ),
+                new TextField(
+                  controller: what_will_students_learnController,
+                  decoration: InputDecoration(
+                      hintText: "What Will Students Learn....", labelText: 'Post What Will Students Learn'),
+                ),
+                new TextField(
+                  controller: target_studentsController,
+                  decoration: InputDecoration(
+                      hintText: "Target Students....", labelText: 'Post Target Students'),
+                ),
+                new TextField(
+                  controller: requirementsController,
+                  decoration: InputDecoration(
+                      hintText: "Requirements....", labelText: 'Post Requirements'),
+                ),
+                new TextField(
+                  controller: discount_priceController,
+                  decoration: InputDecoration(
+                      hintText: "Discount Price....", labelText: 'Post Discount Price'),
+                ),
+                new TextField(
+                  controller: actual_priceController,
+                  decoration: InputDecoration(
+                      hintText: "Actual Price....", labelText: 'Post Actual Price'),
+                ),
+                new RaisedButton(
+                  onPressed: () async {
+                    globals.PostLogin p = await globals.session.createPost(CREATE_POST_URL,
+                        body: {'title': titleController.text,'subtitle': subtitleController.text, 'description': descriptionController.text, 'categoria_id': categoria_idController.text, 'about_instructor': about_instructorController.text, 'about_instructor': about_instructorController.text, 'playlist_url': playlist_urlController.text, 'what_will_students_learn': what_will_students_learnController.text, 'target_students': target_studentsController.text, 'requirements': requirementsController.text, 'discount_price': discount_priceController.text, 'actual_price': actual_priceController.text});
+                    if (p.status=='done'){
+                      print('Creation Successful');
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const Text("Create"),
+                )
+              ],
+            ),
+          )),
     );
   }
 }
