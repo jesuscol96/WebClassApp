@@ -163,6 +163,7 @@ class MyApp extends StatelessWidget {
         '/Ip': (context) => IpPost(),
         '/Suscripciones': (context) => Subscriptions(),
         '/MisCursos': (context) => MyCourses(),
+        '/CrearCategorias': (context) => CrearCategoria(),
       },
     );
   }
@@ -335,7 +336,10 @@ class _CategoriasState extends State<Categorias> {
                   children: <Widget>[
                         Text('Categorías'),
                         RaisedButton(
-                          onPressed: null,
+                          onPressed: (){
+                            Navigator.pop(context);
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => CrearCategoria()),);
+                          },
                           child: Text('Crear Categoría'),
                         ),
                         for (var category in snapshot.data.categorias) Column(
@@ -706,6 +710,58 @@ class Login extends StatelessWidget {
                     }
                   },
                   child: const Text("Login"),
+                )
+              ],
+            ),
+          )),
+    );
+  }
+}
+
+class CrearCategoria extends StatelessWidget {
+  final Future<globals.PostLogin> post;
+
+  CrearCategoria({Key key, this.post}) : super(key: key);
+  static final CREATE_POST_URL = 'http://' + globals.serverIp + '/categorias/process_new_categories_flutter';
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController descriptionController = new TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+
+    return MaterialApp(
+      title: "Crear Categoría",
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+        brightness: Brightness.light,
+      ),
+      home: Scaffold(
+          appBar: AppBar(
+            title: Text('Crear Categoría'),
+          ),
+          body: new Container(
+            margin: const EdgeInsets.only(left: 8.0, right: 8.0),
+            child: new ListView(
+              children: <Widget>[
+                new TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(
+                      hintText: "Name....", labelText: 'Post Name'),
+                ),
+                new TextField(
+                  controller: descriptionController,
+                  decoration: InputDecoration(
+                      hintText: "Description....", labelText: 'Post Description'),
+                ),
+                new RaisedButton(
+                  onPressed: () async {
+                    globals.PostLogin p = await globals.session.createPost(CREATE_POST_URL,
+                        body: {'name': nameController.text,'description': descriptionController.text});
+                    if (p.success){
+                        print('Creation Successful');
+                    }
+                  },
+                  child: const Text("Create"),
                 )
               ],
             ),
