@@ -98,6 +98,38 @@ void _showDialogFalseRegister(context) {
   );
 }
 
+void _showDialogCategory(context, Map category) {
+  // flutter defined function
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      // return object of type Dialog
+      return AlertDialog(
+        title: new Text(category['name']),
+        content: Text(category['description']),
+        // content: new ListView(
+        //   children: <Widget>[
+        //     Text(category['description'])
+        //   ],
+        // ),
+        actions: <Widget>[
+          // usually buttons at the bottom of the dialog
+          FlatButton(
+            onPressed:null,
+            child: Text('Suscribe'),
+            ),
+          new FlatButton(
+            child: new Text("Close"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
 
 void main() => runApp(MyApp());
 
@@ -300,7 +332,12 @@ class _CategoriasState extends State<Categorias> {
                           children: <Widget>[
                             Text(category['name']),
                             Text(category['description']),
-                            Text('Next Category')
+                            RaisedButton(
+                              onPressed: (){
+                                _showDialogCategory(context,category);
+                              },
+                              child:Text('Read More...'),
+                            ),
                           ],
                           ),
                         //Text(snapshot.data.cursos[0]['title']),
