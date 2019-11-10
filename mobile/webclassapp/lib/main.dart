@@ -5,6 +5,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 final color1 = Colors.blue;
+final color2 = Colors.lightBlue[100];
+final color3 = Colors.blue[900];
 
 void _showDialog(context) {
   // flutter defined function
@@ -380,39 +382,43 @@ class _CategoriasState extends State<Categorias> {
             else if(snapshot.hasData) {
               return ListView(
                   children: <Widget>[
-                        RaisedButton(
-                          onPressed: (){
-                            Navigator.pop(context);
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => CrearCategoria()),);
-                          },
-                          color: Colors.lightBlue[500],
-                          textColor: Colors.blue[900],
-                          child: Text('Crear Categoría'),
-                        ),
+
                         for (var category in snapshot.data.categorias) Column(
                           children: <Widget>[
                             Card(
-                              child: ListTile(
-                                leading: FlutterLogo(size: 56.0),
-                                title: Text(category['name']),
-                                subtitle: Text(category['description']),
+                              child: InkWell(
+                                splashColor: Colors.blue.withAlpha(1000),
+
+                                onTap: () {
+                                  _showDialogCategory(context,category);
+                                },
+                                child: Container(
+                                  width: 300,
+                                  height: 150,
+                                  child: ListTile(
+                                    leading: FlutterLogo(size: 56.0),
+                                    title: Text(category['name']),
+                                    subtitle: Text(category['description']),
+                                  ),
+                                ),
                               ),
-                            ),
-                            RaisedButton(
-                              onPressed: (){
-                                _showDialogCategory(context,category);
-                              },
-                              //color: Colors.lightBlue[500],
-                              textColor: Colors.blue[900],
-                              child:Text('Read More...'),
                             ),
                           ],
                           ),
                         //Text(snapshot.data.cursos[0]['title']),
+                    RaisedButton(
+                      onPressed: (){
+                        Navigator.pop(context);
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => CrearCategoria()),);
+                      },
+                      color: color1,
+                      textColor: color3,
+                      child: Text('Crear Categoría'),
+                    ),
                         RaisedButton(
                           onPressed: _refresh,
-                          color: Colors.lightBlue[500],
-                          textColor: Colors.blue[900],
+                          color: color2,
+                          textColor: color3,
                           child: const Text('Refresh'),
                         )]
                   );
@@ -492,29 +498,42 @@ class _CursosState extends State<Cursos> {
             else if(snapshot.hasData) {
               return ListView(
                   children: <Widget>[
-                        Text('Cursos'),
-                        RaisedButton(
-                          onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => CrearCurso()),);
-                          },
-                          child: Text('Crear Curso'),
-                        ),
                         for (var curso in snapshot.data.cursos) Column(
                           children: <Widget>[
-                            Text(curso['title']),
-                            Text(curso['description']),
-                            RaisedButton(
-                              onPressed:() {
-                                globals.curso = curso;
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => VerCurso()),);
-                              },
-                              child: Text('Read More'),
-                            )
+                            Card(
+                              child: InkWell(
+                                splashColor: Colors.blue.withAlpha(1000),
+
+                                onTap: () {
+                                  globals.curso = curso;
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => VerCurso()),);
+                                },
+                                child: Container(
+                                  width: 300,
+                                  height: 150,
+                                  child: ListTile(
+                                    leading: FlutterLogo(size: 56.0),
+                                    title: Text(curso['title']),
+                                    subtitle: Text(curso['description']),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                           ),
                         //Text(snapshot.data.cursos[0]['title']),
+                    RaisedButton(
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => CrearCurso()),);
+                      },
+                      color: color1,
+                      textColor: Colors.white,
+
+                      child: Text('Crear Curso'),
+                    ),
                         RaisedButton(
-                          onPressed: _refresh,
+                          onPressed: _refresh,color: color2,
+                          textColor: color3,
                           child: const Text('Refresh'),
                         )]
                   );
@@ -593,28 +612,40 @@ class _SubscriptionsState extends State<Subscriptions> {
             else if(snapshot.hasData) {
               return ListView(
                   children: <Widget>[
-                        Text('Suscripciones'),
                         // RaisedButton(
                         //   onPressed: null,
                         //   child: Text('Crear Suscripciones'),
                         // ),
                         for (var suscripcion in snapshot.data.cursos) Column(
                           children: <Widget>[
-                            Text(suscripcion['course_id']['title']),
-                            Text(suscripcion['course_id']['description']),
-                            RaisedButton(
-                              onPressed:() {
-                              globals.curso = suscripcion['course_id'];
-                              print(globals.curso);
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => VerCurso()),);
-                              },
-                              child: Text('Read More'),
-                            )
+                            Card(
+
+                              child: InkWell(
+                                splashColor: Colors.blue.withAlpha(1000),
+
+                                onTap: () {
+                                  globals.curso = suscripcion['course_id'];
+                                  print(globals.curso);
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => VerCurso()),);
+                                },
+                                child: Container(
+                                  width: 300,
+                                  height: 100,
+                                  child: ListTile(
+                                    leading: FlutterLogo(size: 56.0),
+                                    title: Text(suscripcion['course_id']['title']),
+                                    subtitle: Text(suscripcion['course_id']['description']),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                           ),
                         //Text(snapshot.data.cursos[0]['title']),
                         RaisedButton(
                           onPressed: _refresh,
+                          color: color2,
+                          textColor: color3,
                           child: const Text('Refresh'),
                         )]
                   );
@@ -693,27 +724,38 @@ class _MyCoursesState extends State<MyCourses> {
             else if(snapshot.hasData) {
               return ListView(
                   children: <Widget>[
-                        Text('Mis Cursos'),
 //                        RaisedButton(
 //                          onPressed: null,
 //                          child: Text('Crear Cursos'),
 //                        ),
                         for (var curso in snapshot.data.cursos) Column(
                           children: <Widget>[
-                            Text(curso['title']),
-                            Text(curso['description']),
-                            RaisedButton(
-                              onPressed:() {
-                                globals.curso = curso;
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => VerCurso()),);
-                              },
-                              child: Text('Read More'),
+                            Card(
+                              child: InkWell(
+                                splashColor: Colors.blue.withAlpha(1000),
+
+                                onTap: () {
+                                  globals.curso = curso;
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => VerCurso()),);
+                                },
+                                child: Container(
+                                  width: 300,
+                                  height: 150,
+                                  child: ListTile(
+                                    leading: FlutterLogo(size: 56.0),
+                                    title: Text(curso['title']),
+                                    subtitle: Text(curso['description']),
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                           ),
                         //Text(snapshot.data.cursos[0]['title']),
                         RaisedButton(
                           onPressed: _refresh,
+                          color: color2,
+                          textColor: color3,
                           child: const Text('Refresh'),
                         )]
                   );
@@ -724,6 +766,8 @@ class _MyCoursesState extends State<MyCourses> {
                         Text("${snapshot.error}"),
                         RaisedButton(
                           onPressed: _refresh,
+                          color: color2,
+                          textColor: color3,
                           child: const Text('Refresh'),
                         ),
                       ]));
@@ -821,7 +865,7 @@ class Login extends StatelessWidget {
                       _showDialog(context);
                     }
                   },
-                  color: Colors.blue,
+                  color: color1,
                   textColor: Colors.white,
                   child: const Text("Login"),
                 )
@@ -922,20 +966,53 @@ class _MyAppState extends State<Index> {
                 return Center(
                     child: Column(
                             children: <Widget>[
-                              Text('You are not logged in. Please Log in'),
+                              SizedBox(
+                                width: 200.0,
+                                height: 20.0,
+                              ),
+                              Card(
+                                child: InkWell(
+                                  splashColor: Colors.blue.withAlpha(1000),
+
+                                  onTap: () {
+                                    print('Card tapped.');
+                                  },
+                                  child: Container(
+                                    width: 300,
+                                    height: 30,
+                                    child: Text('You are not logged in. Please Log in'),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 200.0,
+                                height: 30.0,
+                              ),
                               new TextField(
                                 controller: ipController,
                                 decoration: InputDecoration(
+                                    icon: Icon(Icons.network_locked,
+                                      color: color1,
+                                      size: 50.0,),
+                                    border: OutlineInputBorder(),
                                     hintText: "IP....", labelText: 'Post IP'),
+                              ),
+                              SizedBox(
+                                width: 200.0,
+                                height: 20.0,
                               ),
                               RaisedButton(
                                   onPressed: (){
                                     globals.serverIp = ipController.text;
                                   },
+                                  color: color2,
+                                  textColor: color3,
                                   child: const Text('Set IP')
                               ),
                               RaisedButton(
                                 onPressed: _refresh,
+                                color: color2,
+                                textColor: color3,
                                 child: const Text('Refresh'),
                               ),
                             ])
@@ -1134,7 +1211,66 @@ class VerCurso extends StatelessWidget{
       ),
       body: ListView(
         children: <Widget>[
-          Text(globals.curso['title']),
+        ListTile(
+          title: Text(globals.curso['title']),
+        ),
+          ListTile(
+            leading: Icon(Icons.brightness_1,
+                color: color1,
+                size: 30.0,
+                ),
+            title: Text('Instructor:'),
+            subtitle:Text(globals.curso['about_instructor']) ,
+          ),
+          ListTile(
+            leading: Icon(Icons.brightness_1,
+              color: color1,
+              size: 30.0,
+            ),
+            title: Text('Playlist_url:'),
+            subtitle: Text(globals.curso['playlist_url']),
+          ),
+          ListTile(
+            leading: Icon(Icons.brightness_1,
+              color: color1,
+              size: 30.0,
+            ),
+            title: Text('What_will_students_learn:'),
+            subtitle: Text(globals.curso['what_will_students_learn']),
+          ),
+          ListTile(
+            leading: Icon(Icons.brightness_1,
+              color: color1,
+              size: 30.0,
+            ),
+            title: Text('Target_students'),
+            subtitle: Text(globals.curso['target_students']),
+          ),
+          ListTile(
+            leading: Icon(Icons.brightness_1,
+              color: color1,
+              size: 30.0,
+            ),
+            title: Text('Requirements'),
+            subtitle: Text(globals.curso['requirements']),
+          ),
+          ListTile(
+            leading: Icon(Icons.brightness_1,
+              color: color1,
+              size: 30.0,
+            ),
+            title: Text('Requirements'),
+            subtitle: Text(globals.curso['requirements']),
+          ),
+          ListTile(
+            leading: Icon(Icons.brightness_1,
+              color: color1,
+              size: 30.0,
+            ),
+            title: Text('Actual_price'),
+            subtitle: Text(globals.curso['actual_price'].toString()),
+          ),
+
           RaisedButton(
             onPressed: () async{
               globals.PostLogin p = await globals.session.createPost('http://' + globals.serverIp + '/cursos/process_subscribe_flutter',
@@ -1143,16 +1279,10 @@ class VerCurso extends StatelessWidget{
               if (p.success)
                 print('Suscribe was successful');
             },
+            color: color2,
+            textColor: color3,
             child: Text('Suscribe'),
-            ),
-          //Text(globals.curso['subtitle']),
-          Text(globals.curso['about_instructor']),
-          Text(globals.curso['playlist_url']),
-          Text(globals.curso['what_will_students_learn']),
-          Text(globals.curso['target_students']),
-          Text(globals.curso['requirements']),
-          Text(globals.curso['discount_price'].toString()),
-          Text(globals.curso['actual_price'].toString()),
+          ),
         ],
       ),
     );
