@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:html/dom.dart' as dom;
 final color1 = Colors.blue;
 
 void _showDialog(context) {
@@ -395,7 +397,8 @@ class _CategoriasState extends State<Categorias> {
                               child: ListTile(
                                 leading: FlutterLogo(size: 56.0),
                                 title: Text(category['name']),
-                                subtitle: Text(category['description']),
+                                subtitle: Html(
+                                    data:category['description']),
                               ),
                             ),
                             RaisedButton(
