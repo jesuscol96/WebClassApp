@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:html/dom.dart' as dom;
 final color1 = Colors.blue;
 final color2 = Colors.lightBlue[100];
 final color3 = Colors.blue[900];
@@ -398,7 +400,8 @@ class _CategoriasState extends State<Categorias> {
                                   child: ListTile(
                                     leading: FlutterLogo(size: 56.0),
                                     title: Text(category['name']),
-                                    subtitle: Text(category['description']),
+                                    subtitle: Html(
+                                        data:category['description']),
                                   ),
                                 ),
                               ),
@@ -1259,8 +1262,8 @@ class VerCurso extends StatelessWidget{
               color: color1,
               size: 30.0,
             ),
-            title: Text('Requirements'),
-            subtitle: Text(globals.curso['requirements']),
+            title: Text('Discount_price'),
+            subtitle: Text(globals.curso['discount_price'].toString()),
           ),
           ListTile(
             leading: Icon(Icons.brightness_1,
