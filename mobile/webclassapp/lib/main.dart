@@ -3,6 +3,8 @@ import 'global.dart' as globals;
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+import 'package:cached_network_image/cached_network_image.dart';
+final color1 = Colors.blue;
 
 void _showDialog(context) {
   // flutter defined function
@@ -104,7 +106,51 @@ void _showDialogCategory(context, Map category) {
     context: context,
     builder: (BuildContext context) {
       // return object of type Dialog
-      return AlertDialog(
+      return Center(
+        child: Card(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: Icon(
+                  Icons.book,
+                  color: color1,
+                  size: 30.0,),
+                title:new Text(category['name']),
+                subtitle: Text(category['description']),
+              ),
+              ButtonTheme.bar( // make buttons use the appropriate styles for cards
+                child: ButtonBar(
+                  children: <Widget>[
+                    FlatButton(
+                      child: const Text('DELETE'),
+                      onPressed: () async{
+                    globals.PostLogin p = await globals.session.createPost('http://' + globals.serverIp + '/categorias/delete_category_flutter',
+                    body: {'pk': category['pk'].toString()} );
+                    Navigator.of(context).pop();
+                    if (p.success)
+                    print('Delete was successful');
+                    },
+                    ),
+                    FlatButton(
+                      child: const Text('Suscribe'),
+                      onPressed: null,
+                    ),
+                    FlatButton(
+                      child: const Text('Close'),
+                      onPressed:() {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+
+      /*return AlertDialog(
         title: new Text(category['name']),
         content: Text(category['description']),
         // content: new ListView(
@@ -135,7 +181,7 @@ void _showDialogCategory(context, Map category) {
             },
           ),
         ],
-      );
+      ); */
     },
   );
 }
@@ -150,7 +196,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'WebClassApp',
       theme: new ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: color1,
         brightness: Brightness.light,
       ),
       initialRoute: '/',
@@ -192,7 +238,7 @@ class MyHomePage extends StatelessWidget {
             DrawerHeader(
               child: Text('Django'),
               decoration: BoxDecoration(
-                color: Colors.green,
+                color: color1,
               ),
             ),
             ListTile(
@@ -310,7 +356,7 @@ class _CategoriasState extends State<Categorias> {
     return MaterialApp(
         title: 'Categorías',
         theme: ThemeData(
-          primarySwatch: Colors.green,
+          primarySwatch: color1,
         ),
         home: Scaffold(
           appBar: AppBar(
@@ -334,22 +380,30 @@ class _CategoriasState extends State<Categorias> {
             else if(snapshot.hasData) {
               return ListView(
                   children: <Widget>[
-                        Text('Categorías'),
                         RaisedButton(
                           onPressed: (){
                             Navigator.pop(context);
                             Navigator.push(context, MaterialPageRoute(builder: (context) => CrearCategoria()),);
                           },
+                          color: Colors.lightBlue[500],
+                          textColor: Colors.blue[900],
                           child: Text('Crear Categoría'),
                         ),
                         for (var category in snapshot.data.categorias) Column(
                           children: <Widget>[
-                            Text(category['name']),
-                            Text(category['description']),
+                            Card(
+                              child: ListTile(
+                                leading: FlutterLogo(size: 56.0),
+                                title: Text(category['name']),
+                                subtitle: Text(category['description']),
+                              ),
+                            ),
                             RaisedButton(
                               onPressed: (){
                                 _showDialogCategory(context,category);
                               },
+                              //color: Colors.lightBlue[500],
+                              textColor: Colors.blue[900],
                               child:Text('Read More...'),
                             ),
                           ],
@@ -357,6 +411,8 @@ class _CategoriasState extends State<Categorias> {
                         //Text(snapshot.data.cursos[0]['title']),
                         RaisedButton(
                           onPressed: _refresh,
+                          color: Colors.lightBlue[500],
+                          textColor: Colors.blue[900],
                           child: const Text('Refresh'),
                         )]
                   );
@@ -367,6 +423,7 @@ class _CategoriasState extends State<Categorias> {
                         Text("${snapshot.error}"),
                         RaisedButton(
                           onPressed: _refresh,
+
                           child: const Text('Refresh'),
                         ),
                       ]));
@@ -411,7 +468,7 @@ class _CursosState extends State<Cursos> {
     return MaterialApp(
         title: 'Cursos',
         theme: ThemeData(
-          primarySwatch: Colors.green,
+          primarySwatch: color1,
         ),
         home: Scaffold(
           appBar: AppBar(
@@ -512,7 +569,7 @@ class _SubscriptionsState extends State<Subscriptions> {
     return MaterialApp(
         title: 'Subcripciones',
         theme: ThemeData(
-          primarySwatch: Colors.green,
+          primarySwatch: color1,
         ),
         home: Scaffold(
           appBar: AppBar(
@@ -612,7 +669,7 @@ class _MyCoursesState extends State<MyCourses> {
     return MaterialApp(
         title: 'Mis Cursos',
         theme: ThemeData(
-          primarySwatch: Colors.green,
+          primarySwatch: color1,
         ),
         home: Scaffold(
           appBar: AppBar(
@@ -692,10 +749,11 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+
     return MaterialApp(
       title: "Login",
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: color1,
         brightness: Brightness.light,
       ),
       home: Scaffold(
@@ -706,16 +764,49 @@ class Login extends StatelessWidget {
             margin: const EdgeInsets.only(left: 8.0, right: 8.0),
             child: new ListView(
               children: <Widget>[
+                SizedBox(
+                  width: 200.0,
+                  height: 20.0,
+                ),
+                Image.asset(
+                  'assets/usb.jpg',
+                ),
                 new TextField(
                   controller: usernameController,
                   decoration: InputDecoration(
+                      icon: Icon(Icons.person,
+                        color: color1,
+                        size: 50.0,),
+                      border: OutlineInputBorder(),
                       hintText: "Username....", labelText: 'Post Username'),
+                        //contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                ),
+                SizedBox(
+                  width: 200.0,
+                  height: 20.0,
                 ),
                 new TextField(
                   controller: passwordController,
+                  obscureText: true,
                   decoration: InputDecoration(
+                      icon: Icon(Icons.lock,
+                        color: color1,
+                        size: 50.0,),
+                      border: OutlineInputBorder(),
                       hintText: "Password....", labelText: 'Post Password'),
                 ),
+                SizedBox(
+                  width: 200.0,
+                  height: 20.0,
+                ),
+                Center(
+                  child: new CircularProgressIndicator(),
+                ),
+                SizedBox(
+                  width: 200.0,
+                  height: 20.0,
+                ),
+                //new CircularProgressIndicator(),
                 new RaisedButton(
                   onPressed: () async {
                     globals.PostLogin newPost = new globals.PostLogin(
@@ -730,6 +821,8 @@ class Login extends StatelessWidget {
                       _showDialog(context);
                     }
                   },
+                  color: Colors.blue,
+                  textColor: Colors.white,
                   child: const Text("Login"),
                 )
               ],
@@ -753,7 +846,7 @@ class CrearCategoria extends StatelessWidget {
     return MaterialApp(
       title: "Crear Categoría",
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: color1,
         brightness: Brightness.light,
       ),
       home: Scaffold(
@@ -921,7 +1014,7 @@ class Register extends StatelessWidget {
     return MaterialApp(
       title: "Register",
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: color1,
         brightness: Brightness.light,
       ),
       home: Scaffold(
@@ -1089,7 +1182,7 @@ class CrearCurso extends StatelessWidget {
     return MaterialApp(
       title: "Crear Curso",
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: color1,
         brightness: Brightness.light,
       ),
       home: Scaffold(
