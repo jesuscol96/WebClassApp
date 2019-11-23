@@ -265,6 +265,7 @@ class MyHomePage extends StatelessWidget {
                 Navigator.pushNamed(context, '/Cursos');
               },
             ),
+            if (globals.user['role'] == 3)
             ListTile(
               title: Text('Subscriptions'),
               onTap: () {
@@ -275,6 +276,7 @@ class MyHomePage extends StatelessWidget {
                 Navigator.pushNamed(context, '/Suscripciones');
               },
             ),
+            if (globals.user['role'] == 2)
             ListTile(
               title: Text('My courses'),
               onTap: () {
@@ -285,6 +287,7 @@ class MyHomePage extends StatelessWidget {
                 Navigator.pushNamed(context, '/MisCursos');
               },
             ),
+            if (globals.user['role'] == 1)
             ListTile(
               title: Text('Admin'),
               onTap: () {
@@ -329,6 +332,7 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
+
 
 class Categorias extends StatefulWidget{
   Categorias({Key key, this.title}) : super(key: key);
@@ -866,6 +870,7 @@ class Login extends StatelessWidget {
                     }
                     else{
                       _showDialog(context);
+                      globals.user['username'] = usernameController.text;
                     }
                   },
                   color: color1,
@@ -954,6 +959,8 @@ class _MyAppState extends State<Index> {
   void _refresh() {
     setState(() {
       post = globals.session.fetchPost('/index_flutter');
+      if (globals.user['username'] != 'none')
+        Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(title: 'WebClassApp',)),);
     });
   }
 
@@ -1021,6 +1028,14 @@ class _MyAppState extends State<Index> {
                             ])
                     );
               else if(snapshot.hasData) {
+                globals.user['username'] = snapshot.data.username;
+                if (snapshot.data.is_superuser == true)
+                  globals.user['role'] = 1;
+                else if (snapshot.data.is_instructor == true)
+                  globals.user['role'] = 2;
+                else if (snapshot.data.is_student == true)
+                  globals.user['role'] = 3;
+                print(globals.user);
                 return Center(
                     child: Column(
                             children: <Widget>[

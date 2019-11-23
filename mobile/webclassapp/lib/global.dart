@@ -230,6 +230,10 @@ class Session {
 }
 
 Map curso;
+Map user = {
+  'username' : 'none',
+  'role' : 0,
+};
 //String serverIp = '159.90.175.129';
 String serverIp = '192.168.1.4';
 var session = Session();
