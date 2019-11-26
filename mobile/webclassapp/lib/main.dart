@@ -960,6 +960,7 @@ class _MyAppState extends State<Index> {
     setState(() {
       post = globals.session.fetchPost('/index_flutter');
       if (globals.user['username'] != 'none')
+        Navigator.pop(context);
         Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(title: 'WebClassApp',)),);
     });
   }
