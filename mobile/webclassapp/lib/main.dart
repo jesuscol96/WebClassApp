@@ -413,6 +413,7 @@ class _CategoriasState extends State<Categorias> {
                           ],
                           ),
                         //Text(snapshot.data.cursos[0]['title']),
+                    if (globals.user['role'] == 1)
                     RaisedButton(
                       onPressed: (){
                         Navigator.pop(context);
@@ -422,12 +423,12 @@ class _CategoriasState extends State<Categorias> {
                       textColor: color3,
                       child: Text('Crear Categoría'),
                     ),
-                        RaisedButton(
-                          onPressed: _refresh,
-                          color: color2,
-                          textColor: color3,
-                          child: const Text('Refresh'),
-                        )]
+                    RaisedButton(
+                        onPressed: _refresh,
+                        color: color2,
+                        textColor: color3,
+                        child: const Text('Refresh'),
+                      )]
                   );
             } else if (snapshot.hasError) {
               return Center(
@@ -529,6 +530,7 @@ class _CursosState extends State<Cursos> {
                           ],
                           ),
                         //Text(snapshot.data.cursos[0]['title']),
+                    if (globals.user['role'] == 2)
                     RaisedButton(
                       onPressed: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context) => CrearCurso()),);
@@ -867,10 +869,13 @@ class Login extends StatelessWidget {
                     print(p.is_login);
                     if (p.is_login == false){
                         _showDialogFalse(context);
+                        globals.user['username'] = 'none';
+                        globals.user['role'] = 0;
                     }
                     else{
                       _showDialog(context);
-                      globals.user['username'] = usernameController.text;
+                      globals.user['username'] = 'none';
+                      globals.user['role'] = 0;
                     }
                   },
                   color: color1,
