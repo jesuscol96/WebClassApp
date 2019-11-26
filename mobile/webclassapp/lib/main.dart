@@ -1045,7 +1045,28 @@ class _MyAppState extends State<Index> {
                 return Center(
                     child: Column(
                             children: <Widget>[
-                              Text(snapshot.data.username),
+                              Card(
+                                child: InkWell(
+                                  splashColor: Colors.blue.withAlpha(1000),
+                                  child: Container(
+                                    width: 350,
+                                    height: 100,
+                                    child: ListTile(
+                                      title: //Text(snapshot.data.username),
+                                      Text(
+                                        snapshot.data.username,
+                                        style: TextStyle(
+                                          fontSize: 30,
+                                          foreground: Paint()
+                                           // ..style = PaintingStyle.stroke
+                                            ..strokeWidth = 6
+                                            ..color = Colors.blue[700],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
                               new TextField(
                                 controller: ipController,
                                 decoration: InputDecoration(
