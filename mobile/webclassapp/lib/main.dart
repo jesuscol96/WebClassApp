@@ -6,9 +6,9 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:html/dom.dart' as dom;
-final color1 = Colors.blue;
-final color2 = Colors.lightBlue[100];
-final color3 = Colors.blue[900];
+final color1 = Colors.green;
+final color2 = Colors.lightGreen[100];
+final color3 = Colors.green[900];
 
 void _showDialog(context) {
   // flutter defined function
@@ -240,7 +240,9 @@ class MyHomePage extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              child: Text('Django'),
+              child: Image.asset(
+                'assets/usb.jpg',
+              ),
               decoration: BoxDecoration(
                 color: color1,
               ),
@@ -316,7 +318,12 @@ class MyHomePage extends StatelessWidget {
               onTap: () {
                 globals.session = globals.Session();
                 Navigator.pop(context);
-                p.initState();
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(title: 'WebClassApp',)),);
+                globals.user['username'] = 'none';
+                globals.user['role'] = 0;
+                print(globals.user);
+//                p._MyAppState.initState();
               }
             ),
             ListTile(
@@ -873,9 +880,13 @@ class Login extends StatelessWidget {
                         globals.user['role'] = 0;
                     }
                     else{
-                      _showDialog(context);
                       globals.user['username'] = 'none';
                       globals.user['role'] = 0;
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(title: 'WebClassApp',)),);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(title: 'WebClassApp',)),);
+                      _showDialog(context);
                     }
                   },
                   color: color1,
@@ -1214,6 +1225,8 @@ class IpPost extends StatelessWidget {
             onPressed: (){
               globals.serverIp = IpController.text;
               Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(title: 'WebClassApp',)),);
             },
             child: const Text('Set IP'),
           ),]
