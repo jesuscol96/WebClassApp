@@ -289,16 +289,6 @@ class MyHomePage extends StatelessWidget {
                 Navigator.pushNamed(context, '/MisCursos');
               },
             ),
-            if (globals.user['role'] == 1)
-            ListTile(
-              title: Text('Admin'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
             ListTile(
               title: Text('Login'),
               onTap: () {
@@ -1065,13 +1055,24 @@ class _MyAppState extends State<Index> {
                                     child: ListTile(
                                       title: //Text(snapshot.data.username),
                                       Text(
-                                        snapshot.data.username,
+                                        "Welcome!",
                                         style: TextStyle(
                                           fontSize: 30,
                                           foreground: Paint()
                                            // ..style = PaintingStyle.stroke
                                             ..strokeWidth = 6
-                                            ..color = Colors.blue[700],
+                                            ..color = color1,
+                                        ),
+                                      ),
+                                      subtitle:
+                                      Text(
+                                        snapshot.data.username,
+                                        style: TextStyle(
+                                          fontSize: 30,
+                                          foreground: Paint()
+                                          // ..style = PaintingStyle.stroke
+                                            ..strokeWidth = 6
+                                            ..color = color1,
                                         ),
                                       ),
                                     ),
@@ -1218,6 +1219,8 @@ class Register extends StatelessWidget {
                       //Navigator.pop(context);
                     }
                   },
+                  color: color2,
+                  textColor: color3,
                   child: const Text("Register"),
                 )
               ],
@@ -1249,6 +1252,8 @@ class IpPost extends StatelessWidget {
               Navigator.pop(context);
               Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(title: 'WebClassApp',)),);
             },
+            color: color2,
+            textColor: color3,
             child: const Text('Set IP'),
           ),]
       ),
